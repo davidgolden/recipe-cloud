@@ -1,0 +1,45 @@
+<% include ../partials/header %>
+
+<div class='container text-center'>
+    <h1>Recipe Book of <%= user.username %>:</h1><br>
+    
+    <% if(user.recipes.length == 0) { %>
+        <h4><%= user.username %> has not submitted any recipes.</h4>
+    <% } else { %>
+    
+        <div class='card-columns' style='padding-right: 20px;'>
+        <% if(user.recipes.length > 0) { %>
+            <% user.recipes.forEach(function(recipe) { %>
+                    <div class="card" >
+                        <a class='recipe-card' href='/users/<%= user._id %>/recipes/<%= recipe._id %>'>
+                        <img class="card-img-top" src="<%= recipe.image %>" alt="Recipe Image">
+                        <div class="card-body">
+                          <h4 class="card-title"><%= recipe.name %></h4>
+                          <p class="card-text"><%= recipe.notes.substring(0,100)%><% if(recipe.notes.length >= 100){%>...<% } %></p>
+                          <p class="card-text"><small class="text-muted">Submitted by <%= recipe.author.username %></small></p>
+                        </div>
+                        </a>
+                            <% if(currentUser._id.equals(recipe.author.id)) { %>
+                                <button type='button' class='btn btn-warning add-recipe disabled'>
+                                    <i class="fa fa-book" aria-hidden="true" ></i>
+                                </button>
+                              <% } else { %>
+                                  <button type='button' class='btn btn-warning add-recipe' 
+                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>)'>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                              <% } %>
+                    </div>
+            <% }); %>
+        <% } %>
+        
+    </div>
+<% } %><br>
+    
+</div>
+
+
+
+
+
+<% include ../partials/footer %>

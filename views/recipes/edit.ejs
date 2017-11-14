@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<div class='container'>
+    <h1 style="text-align: center;">Edit <%= recipe.name %></h1>
+    <div class='row' style='width: 50%; margin: 30px auto;'>
+        <form method='POST' action='/users/<%= user_id %>/recipes/<%= recipe._id %>?_method=put'>
+            <div class='form-group'>
+                <input type='text' name='recipe[name]' value='<%= recipe.name %>' class='form-control'></input>
+            </div>
+            <div class='form-group'>
+                <input type='text' name='recipe[url]' value='<%= recipe.url %>' class='form-control'></input>
+            </div>
+            <div class='form-group'>
+                <input type='text' name='recipe[image]' value='<%= recipe.image %>' class='form-control'></input>
+            </div>
+            <div class='form-group'>
+                <textarea name='recipe[notes]' class='form-control'><%= recipe.notes %></textarea>
+            </div>
+            <div class='form-group'>
+                <button type='submit' class='btn btn-lg btn-success'>Submit Recipe!</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

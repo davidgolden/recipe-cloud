@@ -1,0 +1,11 @@
+<% include ../partials/header %>
+
+<div class='container' style='text-align: center;'>
+    <h1>All <em>Grocery</em> Users</h1>
+
+    <% users.forEach(function(user){ %>
+        <h4><a href='/users/<%= user._id %>'><%= user.username %></a> - Recipes Submitted: <%= user.recipes.length %></h4>
+    
+    <% }) %>
+</div>
+<% include ../partials/footer %>

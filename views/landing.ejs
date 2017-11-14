@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+    <div class='text-center'>
+        <h1 class='landing-text'>Welcome to <em>Grocery</em> <i class="fa fa-shopping-bag" aria-hidden="true"></i></h1>
+        
+        <% if(!currentUser) { %>
+            <a href='/login' class='btn btn-lg btn-success'>Login</a>
+        <% } else { %>
+            <a href='/users/<%= currentUser._id %>/recipes/new' class='btn btn-lg btn-success'>Add a Recipe</a>
+        <% } %>
+        
+    </div>
+
+
+
+
+
+<% include partials/footer %>

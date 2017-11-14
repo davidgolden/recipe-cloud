@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+<div class='container recipe-show'>
+    <h1 class='text-center'><%= recipe.name %></h1>
+    
+    
+    
+    <div style='width: 40%; padding: 0 5%;'>
+        <img src='<%= recipe.image %>' alt='Recipe Image' style='margin: 10px auto'></img>
+    </div>
+    <div style='width: 40%; padding: 0 5%;'>
+        
+        <%= recipe.notes %>
+    </div>
+    
+    <div class='text-center'>
+        <% if(currentUser._id.equals(recipe.author.id)) { %>
+            <a class='btn btn-md btn-warning' href='/users/<%= recipe.author.id %>/recipes/<%= recipe._id %>/edit'>Edit Recipe</a>
+            <form action='/users/<%= currentUser._id %>/recipes/<%= recipe._id %>?_method=DELETE' method='post' style='display: inline;'>
+                <input class='btn btn-md btn-danger' type='submit' value='Delete Recipe' style='cursor: pointer;'></input>
+            </form>
+            
+        <% } %>
+    </div>
+    
+</div>
+
+
+
+
+<% include ../partials/footer %>

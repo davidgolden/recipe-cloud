@@ -1,0 +1,132 @@
+$brown: #5F5643;
+$orange: #C5733D;
+$yellow: #F8B533;
+$blue: #72CCB8;
+$teal: #33F895;
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+a, li, p, input {
+    font-family: 'EB Garamond', serif;
+}
+
+body {
+    background-image: url('../images/bg_landing.jpg');
+    background-size: cover;
+}
+
+.container {
+    background-color: rgba(255,255,255,0.8);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 20px 0;
+    
+    form {
+        width: 100%;
+    }
+}
+
+.container-alert {
+    padding: 0 !important;
+    background-color: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin: 10px auto 0 !important;
+}
+
+.landing-text {
+    color: black;
+        margin-top: 35vh;
+        font-size: 4rem;
+        -webkit-text-stroke: black 3px;
+}
+
+.navbar {
+    background-color: $yellow;
+    
+    .navbar-brand {
+        color: $brown;
+    }
+    
+    .nav-link {
+        color: $orange;
+    }
+    
+    .nav-link:hover:not(.disabled) {
+        color: $brown;
+    }
+    
+    .active {
+        color: $brown;
+    }
+}
+
+.btn-success {
+                background-color: $blue;
+                border: $blue;
+            }
+            .btn-success:hover {
+                background-color: $yellow;
+            }
+            
+.card {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    // width: 262px;
+    border: 2px solid $brown;
+    position: relative;
+    transition: opacity 0.5s;
+    
+        :hover {
+            text-decoration: none;
+            color: $blue;
+        }
+        
+        .card-img-top {
+            // width: 238px;
+            height: 160px;
+            object-fit: cover;
+        }
+        
+        .card-muted:hover {
+            color: $brown;
+        }
+        
+        .recipe-card {
+            color: $brown;
+        }
+        
+        i:hover, button:hover {
+            color: inherit !important;
+        }
+        
+        .add-recipe {
+                cursor: pointer;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+        }
+        
+        .delete-recipe {
+            cursor: pointer;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .disabled {
+            pointer-events: none;
+            cursor: pointer;
+        }
+    }
+
+.recipe-show {
+    img {
+        max-height: 500px;
+        // object-fit: cover;
+    }
+}
