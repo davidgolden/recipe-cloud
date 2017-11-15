@@ -52,7 +52,7 @@ body {
     }
     
     .nav-link {
-        color: $orange;
+        color: $orange !important;
     }
     
     .nav-link:hover:not(.disabled) {
@@ -104,19 +104,23 @@ body {
             color: inherit !important;
         }
         
-        .add-recipe {
-                cursor: pointer;
-                position: absolute;
-                bottom: 0;
-                right: 0;
-        }
-        
-        .delete-recipe {
-            cursor: pointer;
+        .card-buttons {
             position: absolute;
             bottom: 0;
-            left: 0;
+            right: 0;
+            display: block;
+            
+            .add-recipe {
+                cursor: pointer;
+            }
+        
+            .delete-recipe {
+                cursor: pointer;
+            }
+            
         }
+        
+        
         
         .disabled {
             pointer-events: none;
@@ -128,5 +132,14 @@ body {
     img {
         max-height: 500px;
         // object-fit: cover;
+    }
+}
+
+.modal-body {
+    form {
+        width: 100%;
+    }
+    .row {
+        margin: 30px auto;
     }
 }

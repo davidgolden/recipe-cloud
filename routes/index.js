@@ -7,11 +7,6 @@ router.get('/', function(req, res) {
     res.render('landing');
 })
 
-// login page route
-router.get('/login', function(req, res) {
-  res.render('login');
-});
-
 // handle login logic
 router.post('/login', passport.authenticate('local',
   {

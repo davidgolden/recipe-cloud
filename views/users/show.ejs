@@ -1,8 +1,12 @@
 <% include ../partials/header %>
 
 <div class='container text-center'>
-    <h1>Recipe Book of <%= user.username %>:</h1><br>
-    
+    <% if(currentUser._id.equals(user._id)) { %>
+        <h1>My Recipe Book</h1><br>
+    <% } else { %>
+        <h1>Recipe Book of <%= user.username %>:</h1><br>
+    <% } %>
+
     <% if(user.recipes.length == 0) { %>
         <h4><%= user.username %> has not submitted any recipes.</h4>
     <% } else { %>
@@ -16,19 +20,32 @@
                         <div class="card-body">
                           <h4 class="card-title"><%= recipe.name %></h4>
                           <p class="card-text"><%= recipe.notes.substring(0,100)%><% if(recipe.notes.length >= 100){%>...<% } %></p>
-                          <p class="card-text"><small class="text-muted">Submitted by <%= recipe.author.username %></small></p>
+                          <p class="card-text"><small class="text-muted"><a href='/users/<%= recipe.author.id %>'>Submitted by <%= recipe.author.username %></a></small></p>
                         </div>
                         </a>
+                        <div class='card-buttons'>
+                            <!--if current user is the author and owns recipe, display delete and disabled add-->
                             <% if(currentUser._id.equals(recipe.author.id)) { %>
                                 <button type='button' class='btn btn-warning add-recipe disabled'>
                                     <i class="fa fa-book" aria-hidden="true" ></i>
                                 </button>
+                            <!--if current user is not author but has recipe, display remove and disabled add-->
+                              <% } else if(JSON.stringify(currentUser.recipes).includes(recipe._id)) { %>
+                                  <button type='button' class='btn btn-warning add-recipe disabled' 
+                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>, this)'>
+                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                    </button>
+                                    <button type='button' class='btn btn-danger delete-recipe' 
+                                        onclick='removeRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>, this)'>
+                                        <i class="fa fa-minus" aria-hidden="true"></i></button>
+                                <!--if current user is not author and does not have recipe, display add-->
                               <% } else { %>
                                   <button type='button' class='btn btn-warning add-recipe' 
-                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>)'>
+                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>, this)'>
                                     <i class="fa fa-plus" aria-hidden="true"></i>
-                                </button>
-                              <% } %>
+                                    </button>
+                                <% } %>
+                            </div>
                     </div>
             <% }); %>
         <% } %>

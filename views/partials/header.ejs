@@ -21,30 +21,30 @@
             <% if(!currentUser) { %>
             <% } else { %>
                 <li class="nav-item">
-                    <a href="/users/<%= currentUser._id %>/recipes" class='nav-link'>Recipe Book</a>
+                    <a href="/users/<%= currentUser._id %>" class='nav-link'>Recipe Book</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" style='cursor: not-allowed;' class='nav-link disabled' data-container="body" data-toggle="popover" data-placement="bottom" data-content="Coming soon!">Grocery List</a>
                 </li>
                 <li class="nav-item">
-                    <a href='/users/<%= currentUser._id %>/recipes/new' class='nav-link'>Add a Recipe</a>
+                    <a data-toggle="modal" data-target="#addrecipe" style='cursor: pointer;' class='nav-link'>Add a Recipe</a>
                 </li>
                 <li class="nav-item">
-                    <a href='/users' class='nav-link'>Browse Users</a>
+                    <a href='/recipes' class='nav-link'>Browse Recipes</a>
                 </li>
             <% } %>
         </ul>
         <ul class="navbar-nav navbar-right">
             <% if(!currentUser) { %>
                 <li class="nav-item">
-                    <a href="/login" class='nav-link'>Log In</a>
+                    <a data-toggle="modal" data-target="#login" class='nav-link' style='cursor: pointer;'>Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/users/new" class='nav-link'>Sign Up</a>
+                    <a data-toggle="modal" data-target="#signup" class='nav-link' style='cursor: pointer;'>Sign Up</a>
                 </li>
             <% } else { %>
                 <li class="nav-item">
-                    <a href='#' class='nav-link active'>Logged in as <%= currentUser.username %></a>
+                    <a href='#' class='nav-link active' style='color: #5F5643 !important;'>Logged in as <%= currentUser.username %></a>
                 </li>
                 <li class="nav-item">
                     <a href="/logout" class='nav-link'>Log Out</a>
@@ -53,6 +53,100 @@
         </ul>
   </div>
 </nav>
+
+<!-- Login Modal -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style='text-align: center;'>Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class='row'>
+          <form class="" action="/login" method="post">
+            <div class='form-group'>
+              <input type="text" name="username" placeholder='username' class='form-control'>
+            </div>
+            <div class='form-group'>
+              <input type="password" name="password" placeholder='password' class='form-control'>
+            </div>
+            <button type="submit" class='btn btn-lg btn-success'>Login</button>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signup" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style='text-align: center;'>Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class='row'>
+            <form method='POST' action='/users'>
+                <div class='form-group'>
+                    <input type='text' name='username' placeholder='Username' class='form-control'></input>
+                </div>
+                <div class='form-group'>
+                    <input type='password' name='password' placeholder='Password' class='form-control'></input>
+                </div>
+                
+                <div class='form-group'>
+                    <button type='submit' class='btn btn-lg btn-success'>Sign Up!</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Recipe Modal -->
+<% if(currentUser) { %>
+<div class="modal fade" id="addrecipe" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style='text-align: center;'>Submit a New Recipe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class='row'>
+          <form method='POST' action='/users/<%= currentUser._id %>/recipes'>
+              <div class='form-group'>
+                  <input type='text' name='recipe[name]' placeholder='Recipe Name' class='form-control'></input>
+              </div>
+              <div class='form-group'>
+                  <input type='text' name='recipe[url]' placeholder='Recipe Link' class='form-control'></input>
+              </div>
+              <div class='form-group'>
+                  <input type='text' name='recipe[image]' placeholder='Image URL' class='form-control'></input>
+              </div>
+              <div class='form-group'>
+                  <textarea name='recipe[notes]' class='form-control' placeholder='Notes'></textarea>
+              </div>
+              <div class='form-group'>
+                  <button type='submit' class='btn btn-lg btn-success'>Submit Recipe!</button>
+              </div>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>
 
 <% if(error && error.length > 0) { %> <!-- need .length because error exists but is undefined if no error -->
   <div class="container container-alert">

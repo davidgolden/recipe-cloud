@@ -30,7 +30,7 @@ router.post('/users', function(req, res) {
             return res.redirect('back');
         }
         passport.authenticate('local')(req, res, function() {
-            req.flash('success', 'Wecome to Grocery, ' + user.username);
+            req.flash('success', `Wecome to Grocery, ${user.username}`);
             res.redirect('/');
         })
     })
@@ -38,13 +38,16 @@ router.post('/users', function(req, res) {
 
 // SHOW USER'S RECIPES
 router.get('/users/:user_id', middleware.isLoggedIn, function(req, res) {
+
     User.findById(req.params.user_id).populate('recipes').exec(function(err, user) {
         if(err) {
             console.log(err);
         } else {
+            
             res.render('users/show', {user: user});
         }
     })
+    
 })
 
 

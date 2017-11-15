@@ -20,6 +20,11 @@
                 <input class='btn btn-md btn-danger' type='submit' value='Delete Recipe' style='cursor: pointer;'></input>
             </form>
             
+        <% } else { %>
+            <button type='button' class='btn btn-warning add-recipe' 
+                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>, this)'>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
         <% } %>
     </div>
     

@@ -6,21 +6,22 @@ var Recipe = require('../models/recipe');
 var middleware = require('../middleware');
 var mongoose = require('mongoose');
 
-// SHOW CURRENT USER'S RECIPES
-router.get('/users/:user_id/recipes', middleware.isLoggedIn, function(req, res) {
-    User.findById(req.params.user_id).populate('recipes').exec(function(err, user) {
+// SHOW ALL RECIPES
+router.get('/recipes', middleware.isLoggedIn, function(req, res) {
+    var myRecipes = req.user.recipes;
+    Recipe.find({'_id': {$nin: myRecipes}}, function(err, recipes) {
         if(err) {
             console.log(err);
         } else {
-            res.render('recipes', {user: user});
+            res.render('recipes', {recipes: recipes});
         }
-    })
-})
+    });
+});
 
 // SUBMIT RECIPE FORM
 router.get('/users/:user_id/recipes/new', middleware.isLoggedIn, function(req, res) {
     res.render('recipes/new');
-})
+});
 
 // CREATE RECIPE ROUTE
 router.post('/users/:user_id/recipes', middleware.isLoggedIn, function(req, res) {
@@ -43,7 +44,7 @@ router.post('/users/:user_id/recipes', middleware.isLoggedIn, function(req, res)
                     user.recipes.push(newRecipe);
                     user.save();
                     
-                    res.redirect('/users/'+req.params.user_id+'/recipes');
+                    res.redirect(`/users/${req.params.user_id}`);
                 }
             })
         }
@@ -52,10 +53,8 @@ router.post('/users/:user_id/recipes', middleware.isLoggedIn, function(req, res)
 
 // add recipe AJAX request
 router.post('/add-recipe', middleware.isLoggedIn, function(req, res) {
-    console.log('made it to route');
     var recipe = req.body.recipe;
     var currentUser = req.body.currentUser;
-    middleware.alreadyAdded(recipe, currentUser)
     User.findById(currentUser._id, function(err, user) {
         if(err) {
             console.log('cannot find currentUser');
@@ -105,7 +104,7 @@ router.put('/users/:user_id/recipes/:recipe_id', middleware.isLoggedIn, function
             console.log(err);
             res.redirect('back');
         } else {
-            res.redirect('/users/'+req.params.user_id+'/recipes');
+            res.redirect(`/users/${req.params.user_id}/recipes`);
         }
     })
 })
@@ -118,7 +117,7 @@ router.delete('/users/:user_id/recipes/:recipe_id', function(req, res) {
             console.log(err);
         } else {
             req.flash('success', 'Recipe Deleted');
-            res.redirect('/users/'+req.params.user_id);
+            res.redirect(`/users/${req.params.user_id}`);
         }
     })
 })
