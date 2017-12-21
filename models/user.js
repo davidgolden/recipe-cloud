@@ -10,7 +10,7 @@ var groceryListSchema = mongoose.Schema({
 });
 
 var userSchema = new mongoose.Schema({
-  username: {type: String, required: true, unique: true, lowercase: true},
+  username: {type: String, required: true, unique: true },
   email: {type: String, required: true, unique: true, lowercase: true},
   password: String,
   resetToken: String,
@@ -56,6 +56,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, {usernameLowerCase: true});
 
 module.exports = mongoose.model('User', userSchema);
