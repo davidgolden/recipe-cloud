@@ -56,6 +56,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
-userSchema.plugin(passportLocalMongoose, {usernameLowerCase: true});
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', userSchema);

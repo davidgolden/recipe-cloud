@@ -6,24 +6,23 @@ var Recipe = require('../models/recipe');
 var middleware = require('../middleware');
 var ing = require('../public/js/conversions');
 
-// SIGN UP FORM
-router.get('/users/new', function(req, res) {
-    res.render('users/new')
-})
-
 // CREATE USER
 router.post('/users', function(req, res) {
-    var newUser = new User({username: req.body.username, email: req.body.email});
-    User.register(newUser, req.body.password, function(err, user) {
-        if(err) {
-            req.flash('error', err.message);
-            return res.redirect('back');
-        }
-        passport.authenticate('local')(req, res, function() {
-            req.flash('success', `Wecome to Grocery, ${user.username}`);
-            res.redirect('/');
-        })
-    })
+    let user = new User({username: req.body.username, email: req.body.email.toLowerCase(), password: req.body.password});
+    user.save();
+    
+    req.flash('success', `Wecome to Grocery, ${user.username}`);
+    res.redirect('/');
+    // User.register(newUser, req.body.password, function(err, user) {
+    //     if(err) {
+    //         req.flash('error', err.message);
+    //         return res.redirect('back');
+    //     }
+    //     passport.authenticate('local')(req, res, function() {
+    //         req.flash('success', `Wecome to Grocery, ${user.username}`);
+    //         res.redirect('/');
+    //     })
+    // })
 })
 
 // SHOW USER'S RECIPES

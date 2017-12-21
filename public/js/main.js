@@ -1,5 +1,23 @@
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
+// $('#myModal').on('shown.bs.modal', function () {
+//   $('#myInput').trigger('focus')
+// })
+
+var checkForm = function(form) {
+  if(form.password.value != form.confirm.value) {
+    alert('Passwords do not match!');
+    return false;
+  }
+  return true;
+}
+
+var signupform = document.getElementById('signupform');
+
+signupform.addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  if(checkForm(signupform)) {
+    signupform.submit();
+  }
 })
 
 function addRecipe(recipe, event, remove){
@@ -80,21 +98,3 @@ var addToGroceryList = function(form) {
 };
 
 
-var checkForm = function(form) {
-  console.log('form being checked');
-  if(form.password.value != form.confirm.value) {
-    alert('Passwords do not match!');
-    return false;
-  }
-  return true;
-}
-
-var signupform = document.getElementById('signupform');
-
-signupform.addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  if(checkForm(form)) {
-    form.submit();
-  }
-})
