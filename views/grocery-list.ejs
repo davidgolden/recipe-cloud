@@ -5,6 +5,14 @@
 <div class='container'>
 
     <form action='/grocery-list?_method=PUT' method='POST'>
+                    <br /><h3>My Menu:</h3>
+                    <% menu.forEach(function(recipe,i) { %>
+                      <div>
+                      <%= i+1 %>
+                      <input type="checkbox" aria-label="Checkbox for following text input" name='menu' value='<%= recipe._id %>'>
+                      <label for='menu'><a href='<%= recipe.url %>'><%= recipe.name %></a></li></label>
+                      </div>
+                    <% }) %>
                     <br /><h3>My Grocery List:</h3>
                     <% groceryList.forEach(function(item, i) { %>
                         <div class='form-group'>

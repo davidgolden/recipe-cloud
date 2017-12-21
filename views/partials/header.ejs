@@ -73,10 +73,10 @@
         <div class='row'>
           <form class="small-form" action="/login" method="post">
             <div class='form-group'>
-              <input type="email" required name="email" placeholder='email' class='form-control'>
+              <input type="email" required name="email" placeholder='Email' class='form-control'>
             </div>
             <div class='form-group'>
-              <input type="password" required name="password" placeholder='password' class='form-control'>
+              <input type="password" required name="password" placeholder='Password' class='form-control'>
             </div>
             <button type="submit" class='btn btn-lg btn-success'>Login</button>
             <a href='/forgot'>Forgot Password</a>
@@ -102,11 +102,9 @@
             <form method='POST' action='/users' class='small-form' id='signupform'>
                 <div class='form-group'>
                     <input type='text' required name='username' placeholder='Username' class='form-control'></input>
-                    <small>This is used as your outward facing identifier.</small>
                 </div>
                 <div class='form-group'>
                     <input type='email' required name='email' placeholder='Email' class='form-control'></input>
-                    <small>Your login identifier; we'll never send you emails you don't request or share your email with anyone.</small>
                 </div>
                 <div class='form-group'>
                     <input type='password' id='password' placeholder='Password' class='form-control' name='password' required></input>

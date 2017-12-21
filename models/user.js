@@ -21,6 +21,12 @@ var userSchema = new mongoose.Schema({
         ref: 'Recipe'
       }
     ],
+  menu: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Recipe'
+      }
+    ],
   groceryList: {
     type: [ groceryListSchema ]
   }

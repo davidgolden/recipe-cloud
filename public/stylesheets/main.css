@@ -1,5 +1,5 @@
 .small-form input[type=text], .small-form input[type=password], .small-form input[type=email] {
-  margin: 0 auto !important;
+  margin: 10px auto !important;
   width: 90% !important; }
 .small-form button, .small-form input[type=submit] {
   margin: 0 auto;

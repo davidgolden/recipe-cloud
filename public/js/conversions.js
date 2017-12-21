@@ -26,7 +26,22 @@ ing.createIng = function(arr, i) {
 
 ing.canBeAdded = function(m1, m2) {
     if(m1 !== m2) {
-        if(m1 === '#' || m1 === 'fl oz' || m1 === 'lb' || m2 === '#' || m2 === 'fl ox' || m2 === 'lb') {
+        if(m1 === '#' && m2 === 'lb') {
+            return false;
+        }
+        else if(m1 === '#' && m2 === 'fl oz') {
+            return false;
+        }
+        else if(m1 === 'lb' && m2 === '#') {
+            return false;
+        }
+        else if(m1 === 'lb' && m2 === 'fl oz') {
+            return false;
+        }
+        else if(m1 === 'fl oz' && m2 === '#') {
+            return false;
+        }
+        else if(m1 === 'fl oz' && m2 === 'lb') {
             return false;
         }
     }

@@ -42,19 +42,48 @@ router.get('/users/:user_id', middleware.isLoggedIn, function(req, res) {
 
 // DISPLAY GROCERY LIST
 router.get('/grocery-list', middleware.isLoggedIn, function(req, res) {
-    User.findById(req.user._id, function(err, user) {
+    User.findById(req.user._id).populate('menu').exec(function(err, user) {
         if(err) {
-            req.flash('error', err.message);
-            return res.redirect('back');
+            console.log(err);
+        } else {
+            res.render('grocery-list', {groceryList: user.groceryList, menu: user.menu });
         }
-        
-        res.render('grocery-list', {groceryList: user.groceryList, addedRecipes: user.addedRecipes})
     })
 })
 
 // UPDATE GROCERY LIST
 router.put('/grocery-list', middleware.isLoggedIn, function(req, res) {
     let items = req.body.item;
+    let menu = req.body.menu;
+
+    if(Array.isArray(menu)) {
+        User.findById(req.user._id, function(err, user) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    menu.forEach(function(recipe) {
+                        user.menu.pull(recipe);
+                        user.save();
+                    })
+                }
+            });
+    }
+    else if(Array.isArray(menu) === false && menu !== undefined) {
+        User.findById(req.user._id, function(err, user) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                        user.menu.pull(menu.toString())
+                        user.save();
+                }
+            });
+    }
+    
+    
+    
+    
     let count;
     if(Array.isArray(items.num)) { count = items.num.length; }
     else { count = 1 };
@@ -119,7 +148,7 @@ router.post('/grocery-list', middleware.isLoggedIn, function(req, res) {
         let name;
         let quantity;
         let measurement;
-        if(Array.isArray(ingredients.num)) { 
+        if(count > 1) { 
             name = ingredients.name[i];
             quantity = ingredients.quantity[i];
             measurement = ingredients.measurement[i];
