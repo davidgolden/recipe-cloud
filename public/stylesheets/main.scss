@@ -1,8 +1,20 @@
 $other: #ED8A27;
 $light: #A6E5CD;
 $dark: #1A2D42;
-$primary-color: red;
-$secondary-color: orange;
+$primary-color: #A6373D;
+$secondary-color: #4FA653;
+
+.alert-danger {
+    color: white;
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+
+.alert-success {
+    color: white;
+    background-color: $secondary-color;
+    border-color: $secondary-color;
+}
 
 .small-form {
 	input[type=text], input[type=password], input[type=email] {

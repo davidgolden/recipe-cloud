@@ -1,3 +1,13 @@
+.alert-danger {
+  color: white;
+  background-color: #A6373D;
+  border-color: #A6373D; }
+
+.alert-success {
+  color: white;
+  background-color: #4FA653;
+  border-color: #4FA653; }
+
 .small-form input[type=text], .small-form input[type=password], .small-form input[type=email] {
   margin: 10px auto !important;
   width: 90% !important; }
@@ -118,22 +128,22 @@ i:hover {
   filter: brightness(90%); }
 
 .btn-primary, .btn-primary .disabled {
-  background-color: red !important;
-  border-color: red !important; }
+  background-color: #A6373D !important;
+  border-color: #A6373D !important; }
 
 .btn-primary:hover, .btn-primary:hover .disabled {
-  background-color: red !important;
-  border-color: red !important;
+  background-color: #A6373D !important;
+  border-color: #A6373D !important;
   -webkit-filter: brightness(90%);
   filter: brightness(90%); }
 
 .btn-secondary, .btn-secondary .disabled {
-  background-color: orange !important;
-  border-color: orange !important; }
+  background-color: #4FA653 !important;
+  border-color: #4FA653 !important; }
 
 .btn-secondary:hover, .btn-secondary:hover .diabled {
-  background-color: orange !important;
-  border-color: orange !important;
+  background-color: #4FA653 !important;
+  border-color: #4FA653 !important;
   -webkit-filter: brightness(90%);
   filter: brightness(90%); }
 

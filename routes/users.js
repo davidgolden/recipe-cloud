@@ -133,7 +133,7 @@ router.put('/grocery-list', middleware.isLoggedIn, function(req, res) {
             }
         });
     }
-    req.flash('success', 'Updated to your grocery list!');
+    req.flash('success', 'Updated your grocery list!');
     res.redirect('back');
 });
 
