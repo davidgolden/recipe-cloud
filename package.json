@@ -11,6 +11,7 @@
     "express": "^4.16.2",
     "express-sanitizer": "^1.0.2",
     "express-session": "^1.15.6",
+    "method-override": "^2.3.10",
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.0",
     "passport": "^0.4.0",
