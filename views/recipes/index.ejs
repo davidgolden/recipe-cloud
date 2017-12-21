@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
 <div class='container text-center'>
-    <h1>All Recipes</h1><br>
+    <h1>Browse All Recipes</h1><br>
     
     <% if(recipes.length === 0) { %>
         <h3>There doesn't seem to be anything here...</h3>
@@ -11,7 +11,7 @@
 
             <% recipes.forEach(function(recipe) { %>
                     <div class="card" >
-                        <a class='recipe-card' href='/users/<%= recipe.author.id %>/recipes/<%= recipe._id %>'>
+                        <a class='recipe-card' href='/recipes/<%= recipe._id %>'>
                         <img class="card-img-top" src="<%= recipe.image %>" alt="Recipe Image">
                         <div class="card-body">
                           <h4 class="card-title"><%= recipe.name %></h4>
@@ -21,12 +21,12 @@
                         </a>
                         <div class='card-buttons'>
                             <% if(currentUser._id.equals(recipe.author.id)) { %>
-                                <button type='button' class='btn btn-warning add-recipe disabled'>
+                                <button type='button' class='btn btn-success add-recipe disabled'>
                                     <i class="fa fa-book" aria-hidden="true" ></i>
                                 </button>
                               <% } else { %>
-                                  <button type='button' class='btn btn-warning add-recipe' 
-                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>, this)'>
+                                  <button type='button' class='btn btn-success add-recipe' 
+                                    onclick='addRecipe(<%= JSON.stringify(recipe._id) %>, this)'>
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     </button>
                               <% } %>

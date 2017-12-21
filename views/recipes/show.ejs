@@ -2,35 +2,71 @@
 
 <div class='container recipe-show'>
     <h1 class='text-center'><%= recipe.name %></h1>
-    
-    
+    <h5 class='text-center'>Recipe submitted by <a href='/users/<%= recipe.author._id %>'><%= recipe.author.username %></a>. <a href='<%= recipe.url %>' target='_blank'>View original recipe.</a></h5>
+    <div class='row'>
+        <div class='col-md-6'>
+            <img src='<%= recipe.image %>' alt='Recipe Image' style='margin: 10px auto'></img>
+        </div>
+        <div class='col-md-6'>
+            <div class='recipe-details'>
+                <h5>Recipe Notes:</h5>
+                <%= recipe.notes %>
+                
+                <form id='addIngredients' name='addIngredients' action='/recipes/<%= recipe._id %>/add' method='post' >
+                    <br /><h5>Ingredient List:</h5>
+                    <% recipe.ingredients.forEach(function(ingredient) { %>
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <input type='hidden' name='ingredient[num]' value='off'> 
+                                <input type="checkbox" aria-label="Checkbox for ingredient" checked name='ingredient[num]' value='on'>
+                              </span>
+                              <input type="number" class="form-control" aria-label="Ingredient quantity" required name='ingredient[quantity]' value='<%= ingredient.quantity %>' style='width: min-content; display: inline-block;'>
+                              <select class='form-control ing-option' style='width: min-content; display: inline-block;' name='ingredient[measurement]'>
+                                <option <% if(ingredient.measurement == '#'){ %> selected='selected' <% }; %> >#</option>
+                                <option <% if(ingredient.measurement == 'tsp'){ %> selected='selected' <% }; %> >tsp</option>
+                                <option <% if(ingredient.measurement == 'tbsp'){ %> selected='selected' <% }; %> >tbsp</option>
+                                <option <% if(ingredient.measurement == 'cup'){ %> selected='selected' <% }; %> >cup</option>
+                                <option <% if(ingredient.measurement == 'lb'){ %> selected='selected' <% }; %> >lb</option>
+                                <option <% if(ingredient.measurement == 'fl oz'){ %> selected='selected' <% }; %> >fl oz</option>
+                              </select>
+                              <input type="text" class="form-control" aria-label="Text input with checkbox" required name='ingredient[name]' value='<%= ingredient.name %>' style='width: min-content; display: inline-block;'>
+                            </div>
+                          </div>
+                        </div>
+                    <% }) %><br />
+                    <button class='btn btn-md btn-success' type='submit'>Add Ingredients to Grocery List</button>
+                </form>
+            </div>
+        </div>
+    </div>
     
     <div style='width: 40%; padding: 0 5%;'>
-        <img src='<%= recipe.image %>' alt='Recipe Image' style='margin: 10px auto'></img>
+        
     </div>
     <div style='width: 40%; padding: 0 5%;'>
         
-        <%= recipe.notes %>
+        
+        
     </div>
+    
     
     <div class='text-center'>
         <% if(currentUser._id.equals(recipe.author.id)) { %>
-            <a class='btn btn-md btn-warning' href='/users/<%= recipe.author.id %>/recipes/<%= recipe._id %>/edit'>Edit Recipe</a>
-            <form action='/users/<%= currentUser._id %>/recipes/<%= recipe._id %>?_method=DELETE' method='post' style='display: inline;'>
-                <input class='btn btn-md btn-danger' type='submit' value='Delete Recipe' style='cursor: pointer;'></input>
+            <a class='btn btn-md btn-secondary' href='/recipes/<%= recipe._id %>/edit'>Edit Recipe</a>
+            <form action='/recipes/<%= recipe._id %>?_method=DELETE' method='post' style='display: inline;'>
+                <input class='btn btn-md btn-primary' type='submit' value='Delete Recipe' style='cursor: pointer;'></input>
             </form>
             
-        <% } else { %>
-            <button type='button' class='btn btn-warning add-recipe' 
-                                    onclick='addRecipe(<%= JSON.stringify(recipe) %>, <%= JSON.stringify(currentUser) %>, this)'>
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
+        <% } else if(has === false) { %>
+            <button type='button' class='btn btn-primary add-recipe' 
+            onclick='addRecipe(<%= JSON.stringify(recipe._id) %>, this)'>
+            Add Recipe to My Cloud
+            </button>
         <% } %>
     </div>
     
 </div>
-
-
-
 
 <% include ../partials/footer %>

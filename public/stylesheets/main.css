@@ -5,17 +5,22 @@ a, li, p, input {
   font-family: 'EB Garamond', serif; }
 
 body {
-  background-image: url("../images/bg_landing.jpg");
-  background-size: cover; }
+  background-color: #A6E5CD; }
 
 .container {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
   padding: 20px 0; }
   .container form {
     width: 100%; }
+
+.landing-imgs .col-md-6 img {
+  border-radius: 20px;
+  border: 5px solid white; }
+.landing-imgs .col-md-6 h5 {
+  margin-top: 15px; }
 
 .container-alert {
   padding: 0 !important;
@@ -24,49 +29,118 @@ body {
   padding: 0 !important;
   margin: 10px auto 0 !important; }
 
+.text-center h1 {
+  font-size: 4rem; }
+
 .landing-text {
-  color: black;
-  margin-top: 35vh;
-  font-size: 4rem;
-  -webkit-text-stroke: black 3px; }
+  color: #1A2D42;
+  font-weight: 700; }
+
+.fa-cloud {
+  color: white;
+  -webkit-text-stroke: 2px #1A2D42; }
 
 .navbar {
-  background-color: #F8B533; }
-  .navbar .navbar-brand {
-    color: #5F5643; }
-  .navbar .nav-link {
-    color: #C5733D !important; }
+  background-color: #ED8A27; }
+  .navbar .navbar-brand, .navbar .active, .navbar .nav-link {
+    color: #1A2D42 !important; }
   .navbar .nav-link:hover:not(.disabled) {
-    color: #5F5643; }
+    font-weight: 700 !important;
+    border-bottom: 1px solid #1A2D42;
+    padding-bottom: 2px; }
   .navbar .active {
-    color: #5F5643; }
+    border-bottom: 1px solid #1A2D42;
+    padding-bottom: 2px; }
 
-.btn-success {
-  background-color: #72CCB8;
-  border: #72CCB8; }
+.btn {
+  color: white !important; }
 
-.btn-success:hover {
-  background-color: #F8B533; }
+.btn:hover {
+  cursor: pointer;
+  color: white !important; }
+
+.btn:hover i {
+  color: white !important; }
+
+i:hover {
+  color: white !important; }
+
+.btn .active {
+  opacity: .8; }
+
+.btn-success, .btn-success .disabled {
+  background-color: #1A2D42 !important;
+  border-color: #1A2D42 !important; }
+
+.btn-success:hover, .btn-success:hover .disabled {
+  background-color: #ED8A27 !important;
+  border-color: #ED8A27 !important; }
+
+.btn-danger, .btn-danger .disabled {
+  background-color: #ED8A27 !important;
+  border-color: #ED8A27 !important; }
+
+.btn-danger:hover, .btn-danger:hover .disabled {
+  background-color: #ED8A27 !important;
+  border-color: #ED8A27 !important;
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%); }
+
+.btn-primary, .btn-primary .disabled {
+  background-color: red !important;
+  border-color: red !important; }
+
+.btn-primary:hover, .btn-primary:hover .disabled {
+  background-color: red !important;
+  border-color: red !important;
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%); }
+
+.btn-secondary, .btn-secondary .disabled {
+  background-color: orange !important;
+  border-color: orange !important; }
+
+.btn-secondary:hover, .btn-secondary:hover .diabled {
+  background-color: orange !important;
+  border-color: orange !important;
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%); }
+
+.add-ingredient-button, .add-ingredient-button .disabled {
+  color: #1A2D42 !important;
+  cursor: pointer;
+  padding: 10px; }
+
+.add-ingredient-button:hover, .add-ingredient-button:hover .disabled {
+  color: #ED8A27 !important; }
+
+.disabled {
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%);
+  cursor: default !important; }
 
 .card {
   display: inline-block;
   margin: 10px;
   padding: 10px;
-  border: 2px solid #5F5643;
+  border: 2px solid white;
   position: relative;
-  transition: opacity 0.5s; }
+  transition: opacity 0.5s;
+  border: 2px solid #1A2D42; }
   .card :hover {
     text-decoration: none;
-    color: #72CCB8; }
+    color: #ED8A27; }
   .card .card-img-top {
     height: 160px;
     object-fit: cover; }
-  .card .card-muted:hover {
-    color: #5F5643; }
+  .card .text-muted a {
+    color: #ED8A27 !important; }
+  .card .text-muted:hover {
+    color: #1A2D42;
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%); }
   .card .recipe-card {
-    color: #5F5643; }
-  .card i:hover, .card button:hover {
-    color: inherit !important; }
+    color: #1A2D42; }
   .card .card-buttons {
     position: absolute;
     bottom: 0;
@@ -80,8 +154,10 @@ body {
     pointer-events: none;
     cursor: pointer; }
 
-.recipe-show img {
-  max-height: 500px; }
+.recipe-show img, .recipe-show .recipe-details {
+  width: 100%;
+  padding: 5%;
+  object-fit: cover; }
 
 .modal-body form {
   width: 100%; }

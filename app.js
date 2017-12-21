@@ -5,7 +5,9 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     methodOverride = require('method-override'),
-    flash = require('connect-flash');
+    flash = require('connect-flash'),
+    cookieParser = require("cookie-parser"),
+    expressSanitizer = require('express-sanitizer');
     
 var Recipe = require('./models/recipe'),
     User = require('./models/user');
@@ -14,13 +16,21 @@ var userRoutes = require('./routes/users'),
     recipeRoutes = require('./routes/recipes'),
     indexRoutes = require('./routes/index');
     
-mongoose.connect('mongodb://admin:admin@ds257495.mlab.com:57495/grocery');
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://admin:admin@ds257495.mlab.com:57495/grocery', { useMongoClient: true })
+      .then(() => console.log(`Database connected`))
+      .catch(err => console.log(`Database connection error: ${err.message}`));
+      
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.set('view engine', 'ejs');
+app.use(expressSanitizer()); // this line follows bodyParser() instantiations 
 app.use(express.static(__dirname +'/public'));
 app.use(methodOverride('_method'));
 app.use(flash());
-app.use(bodyParser.json());
+app.use(cookieParser('secret'));
+
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
@@ -46,8 +56,9 @@ app.use('/', indexRoutes);
 app.use('/', userRoutes);
 app.use('/', recipeRoutes);
 
-
-
+app.get('*', function(req, res) {
+    res.redirect('/');
+})
 
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log('Server has started!!');

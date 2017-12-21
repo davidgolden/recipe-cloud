@@ -3,9 +3,9 @@
 <div class='container'>
     <h1 style="text-align: center;">Edit <%= recipe.name %></h1>
     <div class='row' style='width: 50%; margin: 30px auto;'>
-        <form method='POST' action='/users/<%= user_id %>/recipes/<%= recipe._id %>?_method=put'>
+        <form method='POST' action='/recipes/<%= recipe._id %>?_method=put'>
             <div class='form-group'>
-                <input type='text' name='recipe[name]' value='<%= recipe.name %>' class='form-control'></input>
+                <input type='text' required name='recipe[name]' value='<%= recipe.name %>' class='form-control'></input>
             </div>
             <div class='form-group'>
                 <input type='text' name='recipe[url]' value='<%= recipe.url %>' class='form-control'></input>
@@ -16,8 +16,29 @@
             <div class='form-group'>
                 <textarea name='recipe[notes]' class='form-control'><%= recipe.notes %></textarea>
             </div>
+            
             <div class='form-group'>
-                <button type='submit' class='btn btn-lg btn-success'>Submit Recipe!</button>
+                <h3 style='display: inline;'>Ingredient List</h3>
+                <a class='add-ingredient-button' onclick='addIngredient(this);'>+ ingredient</a>
+                <% recipe.ingredients.forEach(function(ingredient) { %>
+                    <div class='add-ingredient-form'>
+                        <input type="number" class="form-control" style='width:fit-content; display: inline-block;' required aria-label="Text input with checkbox" name='ingredient[quantity]' value='<%= ingredient.quantity %>'>
+                        <select class='form-control ing-option' style='width: fit-content; display: inline-block;' name='ingredient[measurement]'>
+                            <option <% if(ingredient.measurement == '#'){ %> selected='selected' <% }; %> >#</option>
+                            <option <% if(ingredient.measurement == 'tsp'){ %> selected='selected' <% }; %> >tsp</option>
+                            <option <% if(ingredient.measurement == 'tbsp'){ %> selected='selected' <% }; %> >tbsp</option>
+                            <option <% if(ingredient.measurement == 'cup'){ %> selected='selected' <% }; %> >cup</option>
+                            <option <% if(ingredient.measurement == 'lb'){ %> selected='selected' <% }; %> >lb</option>
+                            <option <% if(ingredient.measurement == 'fl oz'){ %> selected='selected' <% }; %> >fl oz</option>
+                        </select>
+                        <input type="text" class="form-control" required style='width: fit-content; display: inline-block;' aria-label="Text input with checkbox" name='ingredient[name]' value='<%= ingredient.name %>'>
+                        <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)'><i class="fa fa-minus" aria-hidden="true"></i></a>
+                    </div>
+                <% }) %>
+            </div>
+            <br />
+            <div class='form-group'>
+                <button type='submit' class='btn btn-lg btn-success'>Submit Updates</button>
             </div>
         </form>
     </div>

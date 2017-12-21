@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Grocery</title>
+        <title>Recipe Cloud</title>
+        <link rel="icon" href=''>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
         <link rel="stylesheet" href="/stylesheets/main.css">
         <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Quicksand" rel="stylesheet">
@@ -11,7 +12,7 @@
     <body>
         
 <nav class="navbar navbar-expand-lg">
-  <a class="navbar-brand" href="/">Grocery</a>
+  <a class="navbar-brand" href="/">Recipe Cloud <i class="fa fa-cloud" aria-hidden="true"></i></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -21,16 +22,16 @@
             <% if(!currentUser) { %>
             <% } else { %>
                 <li class="nav-item">
-                    <a href="/users/<%= currentUser._id %>" class='nav-link'>Recipe Book</a>
+                    <a href="/users/<%= currentUser._id %>" class='nav-link'>My Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" style='cursor: not-allowed;' class='nav-link disabled' data-container="body" data-toggle="popover" data-placement="bottom" data-content="Coming soon!">Grocery List</a>
+                    <a href="/grocery-list" class='nav-link'>Grocery List</a>
                 </li>
                 <li class="nav-item">
-                    <a data-toggle="modal" data-target="#addrecipe" style='cursor: pointer;' class='nav-link'>Add a Recipe</a>
+                    <a data-toggle="modal" data-target="#addrecipe" style='cursor: pointer;' class='nav-link'>Submit a Recipe</a>
                 </li>
                 <li class="nav-item">
-                    <a href='/recipes' class='nav-link'>Browse Recipes</a>
+                    <a href='/recipes' class='nav-link'>Browse All Recipes</a>
                 </li>
             <% } %>
         </ul>
@@ -44,7 +45,7 @@
                 </li>
             <% } else { %>
                 <li class="nav-item">
-                    <a href='#' class='nav-link active' style='color: #5F5643 !important;'>Logged in as <%= currentUser.username %></a>
+                    <a href='#' class='nav-link'>Logged in as <%= currentUser.username %></a>
                 </li>
                 <li class="nav-item">
                     <a href="/logout" class='nav-link'>Log Out</a>
@@ -68,10 +69,10 @@
         <div class='row'>
           <form class="" action="/login" method="post">
             <div class='form-group'>
-              <input type="text" name="username" placeholder='username' class='form-control'>
+              <input type="text" required name="username" placeholder='username' class='form-control' autocomplete='username'>
             </div>
             <div class='form-group'>
-              <input type="password" name="password" placeholder='password' class='form-control'>
+              <input type="password" required name="password" placeholder='password' class='form-control' autocomplete='current-password'>
             </div>
             <button type="submit" class='btn btn-lg btn-success'>Login</button>
           </form>
@@ -95,10 +96,13 @@
         <div class='row'>
             <form method='POST' action='/users'>
                 <div class='form-group'>
-                    <input type='text' name='username' placeholder='Username' class='form-control'></input>
+                    <input type='text' required name='username' placeholder='Username' class='form-control'></input>
                 </div>
                 <div class='form-group'>
-                    <input type='password' name='password' placeholder='Password' class='form-control'></input>
+                    <input type='email' required name='email' placeholder='Email' class='form-control'></input>
+                </div>
+                <div class='form-group'>
+                    <input type='password' required name='password' placeholder='Password' class='form-control'></input>
                 </div>
                 
                 <div class='form-group'>
@@ -117,16 +121,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style='text-align: center;'>Submit a New Recipe</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style='text-align: center;'>Submit a Recipe</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class='row'>
-          <form method='POST' action='/users/<%= currentUser._id %>/recipes'>
+          <form method='POST' action='/recipes' id='ingredients-form'>
               <div class='form-group'>
-                  <input type='text' name='recipe[name]' placeholder='Recipe Name' class='form-control'></input>
+                  <input type='text' required name='recipe[name]' placeholder='Recipe Name' class='form-control'></input>
               </div>
               <div class='form-group'>
                   <input type='text' name='recipe[url]' placeholder='Recipe Link' class='form-control'></input>
@@ -138,6 +142,24 @@
                   <textarea name='recipe[notes]' class='form-control' placeholder='Notes'></textarea>
               </div>
               <div class='form-group'>
+                <h3 style='display: inline;'>Ingredient List</h3>
+                <a class='add-ingredient-button' onclick='addIngredient(this);'>+ ingredient</a>
+                <div class='add-ingredient-form'>
+                  <input type='number' required name='recipe.ingredients[].quantity' placeholder='1' class='form-control ing-option' style='width: fit-content; display: inline-block;'></input>
+                  <select class='form-control ing-option' style='width: fit-content; display: inline-block;' name='recipe.ingredients[].measurement'>
+                    <option>#</option>
+                    <option>tsp</option>
+                    <option>tbsp</option>
+                    <option>cup</option>
+                    <option>lb</option>
+                    <option>fl oz</option>
+                  </select>
+                  <input type='text' required name='recipe.ingredients[].name' placeholder='Carrots' class='form-control ing-option' style='width: fit-content; display: inline-block;'></input>
+                  <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)'><i class="fa fa-minus" aria-hidden="true"></i></a>
+                </div>
+              </div>
+              <div class='form-group'>
+                
                   <button type='submit' class='btn btn-lg btn-success'>Submit Recipe!</button>
               </div>
           </form>

@@ -1,8 +1,8 @@
-$brown: #5F5643;
-$orange: #C5733D;
-$yellow: #F8B533;
-$blue: #72CCB8;
-$teal: #33F895;
+$other: #ED8A27;
+$light: #A6E5CD;
+$dark: #1A2D42;
+$primary-color: red;
+$secondary-color: orange;
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Quicksand', sans-serif;
@@ -13,12 +13,11 @@ a, li, p, input {
 }
 
 body {
-    background-image: url('../images/bg_landing.jpg');
-    background-size: cover;
+    background-color: $light;
 }
 
 .container {
-    background-color: rgba(255,255,255,0.8);
+    background-color: transparent;
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -26,6 +25,16 @@ body {
     
     form {
         width: 100%;
+    }
+}
+
+.landing-imgs .col-md-6 {
+    img {
+        border-radius: 20px;
+        border: 5px solid white;
+    }
+    h5 {
+        margin-top: 15px;
     }
 }
 
@@ -37,53 +46,131 @@ body {
     margin: 10px auto 0 !important;
 }
 
-.landing-text {
-    color: black;
-        margin-top: 35vh;
+.text-center {
+    h1 {
         font-size: 4rem;
-        -webkit-text-stroke: black 3px;
+    }
+}
+
+.landing-text {
+    color: $dark;
+    
+    // text-shadow: 2px 2px 2px black;
+    font-weight: 700;
+    
+    
+}
+
+.fa-cloud {
+    color: white;
+   -webkit-text-stroke: 2px $dark;
 }
 
 .navbar {
-    background-color: $yellow;
+    background-color: $other;
     
-    .navbar-brand {
-        color: $brown;
+    .navbar-brand, .active, .nav-link {
+        color: $dark !important;
     }
-    
-    .nav-link {
-        color: $orange !important;
-    }
-    
     .nav-link:hover:not(.disabled) {
-        color: $brown;
+        font-weight: 700 !important;
+        border-bottom: 1px solid $dark;
+        padding-bottom: 2px;
     }
-    
     .active {
-        color: $brown;
+        border-bottom: 1px solid $dark;
+        padding-bottom: 2px;
     }
 }
 
-.btn-success {
-                background-color: $blue;
-                border: $blue;
+.btn {
+    color: white !important;
+}
+
+.btn:hover {
+    cursor: pointer;
+    color: white !important;
+}
+
+.btn:hover i {
+    color: white !important;
+}
+
+i:hover {
+    color: white !important;
+}
+
+.btn .active {
+    opacity: .8;
+}
+
+.btn-success, .btn-success .disabled {
+                background-color: $dark !important;
+                border-color: $dark !important;
             }
-            .btn-success:hover {
-                background-color: $yellow;
+            .btn-success:hover, .btn-success:hover .disabled {
+                background-color: $other !important;
+                border-color: $other !important;
             }
+            
+.btn-danger, .btn-danger .disabled {
+    background-color: $other !important;
+    border-color: $other !important;
+}
+.btn-danger:hover, .btn-danger:hover .disabled {
+    background-color: $other !important;
+    border-color: $other !important;
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%);
+}
+.btn-primary, .btn-primary .disabled {
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+}
+.btn-primary:hover, .btn-primary:hover .disabled {
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%);
+}
+.btn-secondary, .btn-secondary .disabled {
+    background-color: $secondary-color !important;
+    border-color: $secondary-color !important;
+}
+.btn-secondary:hover, .btn-secondary:hover .diabled {
+    background-color: $secondary-color !important;
+    border-color: $secondary-color !important;
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%);
+}
+.add-ingredient-button, .add-ingredient-button .disabled {
+    color: $dark !important;
+    cursor: pointer;
+    padding: 10px;
+}
+.add-ingredient-button:hover, .add-ingredient-button:hover .disabled {
+    color: $other !important;
+}
+
+.disabled {
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%);
+    cursor: default !important;
+}
             
 .card {
     display: inline-block;
     margin: 10px;
     padding: 10px;
     // width: 262px;
-    border: 2px solid $brown;
+    border: 2px solid white;
     position: relative;
     transition: opacity 0.5s;
+    border: 2px solid $dark;
     
         :hover {
             text-decoration: none;
-            color: $blue;
+            color: $other;
         }
         
         .card-img-top {
@@ -92,16 +179,18 @@ body {
             object-fit: cover;
         }
         
-        .card-muted:hover {
-            color: $brown;
+        .text-muted a {
+            color: $other !important;
+        }
+        
+        .text-muted:hover {
+            color: $dark;
+            -webkit-filter: brightness(90%);
+            filter: brightness(90%);
         }
         
         .recipe-card {
-            color: $brown;
-        }
-        
-        i:hover, button:hover {
-            color: inherit !important;
+            color: $dark;
         }
         
         .card-buttons {
@@ -129,9 +218,10 @@ body {
     }
 
 .recipe-show {
-    img {
-        max-height: 500px;
-        // object-fit: cover;
+    img, .recipe-details {
+        width: 100%;
+        padding: 5%;
+        object-fit: cover;
     }
 }
 

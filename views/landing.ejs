@@ -1,16 +1,33 @@
 <% include partials/header %>
 
+<div class='container'>
     <div class='text-center'>
-        <h1 class='landing-text'>Welcome to <em>Grocery</em> <i class="fa fa-shopping-bag" aria-hidden="true"></i></h1>
+        <hr>
+        <h1 class='landing-text'>Welcome to <em>Recipe Cloud</em> <i class="fa fa-cloud" aria-hidden="true"></i></h1>
+        <h3 class='landing-text'>Add, Manage, and Share Recipes and Create Grocery Lists.</h3><br />
         
         <% if(!currentUser) { %>
             <a class='btn btn-lg btn-success' data-toggle="modal" data-target="#login">Login</a>
         <% } else { %>
             <a data-toggle="modal" data-target="#addrecipe" class='btn btn-lg btn-success'>Add a Recipe</a>
         <% } %>
+        <br />
+        <hr>
+        <div class='row landing-imgs' style='margin-top: 50px;'>
+            <div class='col-md-6'>
+                <img src='/images/addrecipe.png' style='width: 100%;'>
+                <h5>Easily submit recipes to add to your recipe cloud, and use these recipes to populate your grocery list.</h5>
+            </div>
+            <div class='col-md-6'>
+                <img src='/images/recipebook.png' style='width: 100%;'>
+                <h5>Browse yours or others' recipes, then easily add those recipes to your recipe cloud.</h5>
+            </div>
+        
+        </div>
+        
         
     </div>
-
+</div>
 
 
 

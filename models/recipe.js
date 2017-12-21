@@ -5,7 +5,13 @@ var recipeSchema = new mongoose.Schema({
     url: String,
     notes: String,
     image: String,
-    ingredients: [String],
+    ingredients: [
+            {
+                quantity: Number,
+                measurement: String,
+                name: { type: String, lowercase: true }
+            },
+        ],
     author: {
         id: {
           type: mongoose.Schema.Types.ObjectId,

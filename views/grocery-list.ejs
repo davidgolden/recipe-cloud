@@ -1,0 +1,51 @@
+<% include partials/header %>
+
+<div class='container'>
+    <form action='/grocery-list?_method=PUT' method='POST'>
+                    <br /><h3>My Grocery List:</h3>
+                    <% groceryList.forEach(function(item, i) { %>
+                        <div class='form-group'>
+                              <input type='hidden' name='item[id]' value='<%= item._id %>'>
+                              <span class="input-group-addon" style='width: min-content; display: inline-block;'>
+                                <input type='hidden' name='item[num]' value='off' />
+                                <input type="checkbox" aria-label="Checkbox for following text input" name='item[num]' value='on'>
+                              </span>
+                              <input type="number" class="form-control" numeric aria-label="Text input with checkbox" required name='item[quantity]' value='<%= item.quantity %>' style='width: 15%; display: inline-block;'>
+                              <select class='form-control ing-option' name='item[measurement]' style='width: 15%; display: inline-block;'>
+                                <option <% if(item.measurement == '#'){ %> selected='selected' <% }; %> >#</option>
+                                <option <% if(item.measurement == 'tsp'){ %> selected='selected' <% }; %> >tsp</option>
+                                <option <% if(item.measurement == 'tbsp'){ %> selected='selected' <% }; %> >tbsp</option>
+                                <option <% if(item.measurement == 'cup'){ %> selected='selected' <% }; %> >cup</option>
+                                <option <% if(item.measurement == 'lb'){ %> selected='selected' <% }; %> >lb</option>
+                                <option <% if(item.measurement == 'fl oz'){ %> selected='selected' <% }; %> >fl oz</option>
+                              </select>
+                              <input type="text" class="form-control" aria-label="Text input with checkbox" required name='item[name]' value='<%= item.name %>' style='width: 50%; display: inline-block;'>
+                        </div>
+                    <% }) %><br />
+                    <button class='btn btn-md btn-success' type='submit'>Update List</button>
+                </form><br />
+                
+                
+            <form action='/grocery-list' method='post'>
+                <div class='form-group'>
+                <h3 style='display: inline;'>Add List Items</h3>
+                <a class='add-ingredient-button' onclick='addIngredient(this);'>+ ingredient</a>
+                <div class='add-ingredient-form'>
+                  <input required type='text' required name='ingredient[quantity]' placeholder='1' class='form-control ing-option' style='width: 10%; display: inline-block;'></input>
+                  <select class='form-control ing-option' style='width: 15%; display: inline-block;' name='ingredient[measurement]'>
+                    <option>#</option>
+                    <option>tsp</option>
+                    <option>tbsp</option>
+                    <option>cup</option>
+                    <option>lb</option>
+                    <option>fl oz</option>
+                  </select>
+                  <input required type='text' required name='ingredient[name]' placeholder='Carrots' class='form-control ing-option' style='width: 60%; display: inline-block;'></input>
+                  <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)'><i class="fa fa-minus" aria-hidden="true"></i></a>
+                </div>
+              </div>
+                <button type='submit' class='btn btn-md btn-success'>Add Items</button>
+          </form>
+</div>
+
+<% include partials/footer %>
