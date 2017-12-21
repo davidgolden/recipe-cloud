@@ -7,9 +7,9 @@
         <h3 class='landing-text'>Add, Manage, and Share Recipes and Create Grocery Lists.</h3><br />
         
         <% if(!currentUser) { %>
-            <a class='btn btn-lg btn-success' data-toggle="modal" data-target="#login">Login</a>
+            <button class='btn btn-lg btn-success' data-toggle="modal" data-target="#login">Login</button>
         <% } else { %>
-            <a data-toggle="modal" data-target="#addrecipe" class='btn btn-lg btn-success'>Add a Recipe</a>
+            <button data-toggle="modal" data-target="#addrecipe" class='btn btn-lg btn-success'>Add a Recipe</button>
         <% } %>
         <br />
         <hr>
