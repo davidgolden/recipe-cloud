@@ -55,38 +55,44 @@ router.get('/grocery-list', middleware.isLoggedIn, function(req, res) {
 router.put('/grocery-list', middleware.isLoggedIn, function(req, res) {
     let items = req.body.item;
     let menu = req.body.menu;
-
-    if(Array.isArray(menu)) {
-        User.findById(req.user._id, function(err, user) {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    menu.forEach(function(recipe) {
-                        user.menu.pull(recipe);
-                        user.save();
-                    })
-                }
-            });
+    
+    if(menu !== undefined) {
+        if(Array.isArray(menu)) {
+            User.findById(req.user._id, function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        menu.forEach(function(recipe) {
+                            user.menu.pull(recipe);
+                            user.save();
+                        })
+                    }
+                });
+        }
+        else if(Array.isArray(menu) === false && menu !== undefined) {
+            User.findById(req.user._id, function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                            user.menu.pull(menu.toString())
+                            user.save();
+                    }
+                });
+        }
     }
-    else if(Array.isArray(menu) === false && menu !== undefined) {
-        User.findById(req.user._id, function(err, user) {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                        user.menu.pull(menu.toString())
-                        user.save();
-                }
-            });
-    }
     
     
     
-    
+    if(items !== undefined) {
     let count;
-    if(Array.isArray(items.num)) { count = items.num.length; }
-    else { count = 1 };
+    if(Array.isArray(items.num)) { 
+        count = items.num.length;
+    }
+    else {
+        count = 1;
+    };
     // remove extraneous 'off' variables in num (if checkbox is on)
     for(let i=0; i< items.num.length; i++) {
         if(items.num[i] === 'on') {
@@ -126,7 +132,7 @@ router.put('/grocery-list', middleware.isLoggedIn, function(req, res) {
                     }
             }
         });
-    
+    }
     req.flash('success', 'Updated to your grocery list!');
     res.redirect('back');
 });
