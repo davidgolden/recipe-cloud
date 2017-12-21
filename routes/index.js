@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 })
 
 // handle login logic
-router.post('/login', function(req, res, next) {
+router.post('/login', usernameToLowerCase, function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) return next(err);
     if (!user) {
@@ -23,6 +23,10 @@ router.post('/login', function(req, res, next) {
     });
   })(req, res, next);
 });
+function usernameToLowerCase(req, res, next){
+    req.body.email = req.body.email.toLowerCase();
+    next();
+}
 
 //logout
 router.get('/logout', function(req, res) {
