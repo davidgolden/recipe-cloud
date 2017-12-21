@@ -7,7 +7,10 @@
         <link rel="stylesheet" href="/stylesheets/main.css">
         <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Quicksand" rel="stylesheet">
         <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no">
+        <style type="text/css">
+          .modal-open { position: fixed; width: 100%; }
+        </style>
     </head>
 
     <body>
@@ -68,14 +71,15 @@
       </div>
       <div class="modal-body">
         <div class='row'>
-          <form class="" action="/login" method="post">
+          <form class="small-form" action="/login" method="post">
             <div class='form-group'>
-              <input type="text" required name="username" placeholder='username' class='form-control' autocomplete='username'>
+              <input type="email" required name="email" placeholder='email' class='form-control'>
             </div>
             <div class='form-group'>
-              <input type="password" required name="password" placeholder='password' class='form-control' autocomplete='current-password'>
+              <input type="password" required name="password" placeholder='password' class='form-control'>
             </div>
             <button type="submit" class='btn btn-lg btn-success'>Login</button>
+            <a href='/forgot'>Forgot Password</a>
           </form>
       </div>
       </div>
@@ -95,15 +99,20 @@
       </div>
       <div class="modal-body">
         <div class='row'>
-            <form method='POST' action='/users'>
+            <form method='POST' action='/users' class='small-form' id='signupform'>
                 <div class='form-group'>
                     <input type='text' required name='username' placeholder='Username' class='form-control'></input>
+                    <small>This is used as your outward facing identifier.</small>
                 </div>
                 <div class='form-group'>
                     <input type='email' required name='email' placeholder='Email' class='form-control'></input>
+                    <small>Your login identifier; we'll never send you emails you don't request or share your email with anyone.</small>
                 </div>
                 <div class='form-group'>
-                    <input type='password' required name='password' placeholder='Password' class='form-control'></input>
+                    <input type='password' id='password' placeholder='Password' class='form-control' name='password' required></input>
+                </div>
+                <div class='form-group'>
+                    <input type='password' id='confirm' placeholder='Confirm Password' class='form-control' required></input>
                 </div>
                 
                 <div class='form-group'>
@@ -130,6 +139,8 @@
       <div class="modal-body">
         <div class='row'>
           <form method='POST' action='/recipes' id='ingredients-form'>
+
+              <h3>Recipe Information</h3>
               <div class='form-group'>
                   <input type='text' required name='recipe[name]' placeholder='Recipe Name' class='form-control'></input>
               </div>
@@ -143,11 +154,11 @@
                   <textarea name='recipe[notes]' class='form-control' placeholder='Notes'></textarea>
               </div>
               <div class='form-group'>
-                <h3 style='display: inline;'>Ingredient List</h3>
+                <h3 style='display: inline;'>Add Ingredient</h3>
                 <a class='add-ingredient-button' onclick='addIngredient(this);'>+ ingredient</a>
                 <div class='add-ingredient-form'>
-                  <input type='number' required name='recipe.ingredients[].quantity' placeholder='1' class='form-control ing-option' style='width: fit-content; display: inline-block;'></input>
-                  <select class='form-control ing-option' style='width: fit-content; display: inline-block;' name='recipe.ingredients[].measurement'>
+                  <input type='number' step="0.01" required name='recipe.ingredients[].quantity' placeholder='1' class='form-control form-control-sm ing-option' style='width: 10%; display: inline-block;'></input>
+                  <select class='form-control form-control-sm ing-option' style='width: 15%; display: inline-block;' name='recipe.ingredients[].measurement'>
                     <option>#</option>
                     <option>tsp</option>
                     <option>tbsp</option>
@@ -155,10 +166,22 @@
                     <option>lb</option>
                     <option>fl oz</option>
                   </select>
-                  <input type='text' required name='recipe.ingredients[].name' placeholder='Carrots' class='form-control ing-option' style='width: fit-content; display: inline-block;'></input>
-                  <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)'><i class="fa fa-minus" aria-hidden="true"></i></a>
+                  <input type='text' required name='recipe.ingredients[].name' placeholder='Carrots' class='form-control form-control-sm ing-option' style='width: 60%; display: inline-block;'></input>
+                  <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)' style='border: 0; padding: .25rem .5rem;'><i class="fa fa-minus" aria-hidden="true"></i></a>
                 </div>
               </div>
+              
+              <h3>Add Tags</h3>
+              
+            <% tags.forEach(function(tag) { %>
+              <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="recipe[tags]" value="<%= tag %>"> <%= tag %>
+              </label>
+            </div>
+            <% }) %>
+            
+            
               <div class='form-group'>
                 
                   <button type='submit' class='btn btn-lg btn-success'>Submit Recipe!</button>

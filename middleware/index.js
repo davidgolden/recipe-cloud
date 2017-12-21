@@ -16,7 +16,7 @@ middlewareObj.checkRecipeOwnership = (req, res, next) => {
   if(req.isAuthenticated()) {
     Recipe.findById(req.params.recipe_id, function(err, recipe) {
       if(err || !recipe) {
-        req.flash('error', 'Campground not found.');
+        req.flash('error', 'Recipe not found.');
         res.redirect('back');
       } else {
         // does user own the campground?

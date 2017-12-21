@@ -141,6 +141,7 @@ router.put('/recipes/:recipe_id', middleware.checkRecipeOwnership, function(req,
                 recipe.url = updatedRecipe.url;
                 recipe.notes = updatedRecipe.notes;
                 recipe.image = updatedRecipe.image;
+                recipe.tags = updatedRecipe.tags;
                 recipe.ingredients.splice(0, recipe.ingredients.length);
                 recipe.save();
             // loop of number of ingredients
@@ -166,7 +167,7 @@ router.delete('/recipes/:recipe_id', middleware.checkRecipeOwnership, function(r
         }
         else {
             req.flash('success', 'Recipe Deleted');
-            res.redirect(`/users/${req.user_id}`);
+            res.redirect(`/users/${req.user._id}`);
         }
     });
 });

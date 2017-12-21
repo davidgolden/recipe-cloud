@@ -3,7 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local'),
+    LocalStrategy = require('passport-local').Strategy,
     methodOverride = require('method-override'),
     flash = require('connect-flash'),
     cookieParser = require("cookie-parser"),
@@ -38,11 +38,33 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }));
+
+
+passport.use(new LocalStrategy(function(email, password, done) {
+  User.findOne({ email: email }, function(err, user) {
+    if (err) return done(err);
+    if (!user) return done(null, false, { message: 'Incorrect email.' });
+    user.comparePassword(password, function(err, isMatch) {
+      if (isMatch) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+    });
+  });
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 // middleware function to be applied to all routes (authenticates user)
 app.use(function(req, res, next) {
@@ -51,6 +73,8 @@ app.use(function(req, res, next) {
   res.locals.success = req.flash('success');
   next();
 });
+
+app.locals.tags = ['Dinner', 'Quick/Easy', 'Dessert', 'Vegetarian', 'Vegan', 'Dairy-Free'];
 
 app.use('/', indexRoutes);
 app.use('/', userRoutes);

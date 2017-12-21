@@ -5,6 +5,7 @@ var recipeSchema = new mongoose.Schema({
     url: String,
     notes: String,
     image: String,
+    tags: [String],
     ingredients: [
             {
                 quantity: Number,

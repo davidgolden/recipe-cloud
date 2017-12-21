@@ -1,3 +1,33 @@
+.small-form input[type=text], .small-form input[type=password], .small-form input[type=email] {
+  margin: 0 auto !important;
+  width: 90% !important; }
+.small-form button, .small-form input[type=submit] {
+  margin: 0 auto;
+  display: block; }
+.small-form label {
+  margin-left: 5%; }
+
+.form-group {
+  margin-bottom: 3px; }
+
+.form-check-inline {
+  background-color: #ED8A27;
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: white;
+  margin-right: 0; }
+
+.badge-primary {
+  background-color: #ED8A27;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500; }
+
+.form-check-label {
+  font-size: .8rem; }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Quicksand', sans-serif; }
 
@@ -5,7 +35,8 @@ a, li, p, input {
   font-family: 'EB Garamond', serif; }
 
 body {
-  background-color: #A6E5CD; }
+  background-color: #A6E5CD;
+  width: 100%; }
 
 .container {
   background-color: transparent;
@@ -156,7 +187,7 @@ i:hover {
 
 .recipe-show img, .recipe-show .recipe-details {
   width: 100%;
-  padding: 5%;
+  padding-left: 5%;
   object-fit: cover; }
 
 .modal-body form {

@@ -1,0 +1,17 @@
+<div class='form-group'>
+                <h3 style='display: inline;'>Add Ingredient</h3>
+                <a class='add-ingredient-button' onclick='addIngredient(this);'>+ ingredient</a>
+                <div class='add-ingredient-form'>
+                  <input type='number' step="0.01" required name='recipe.ingredients[].quantity' placeholder='1' class='form-control ing-option' style='width: fit-content; display: inline-block;'></input>
+                  <select class='form-control ing-option' style='width: fit-content; display: inline-block;' name='recipe.ingredients[].measurement'>
+                    <option>#</option>
+                    <option>tsp</option>
+                    <option>tbsp</option>
+                    <option>cup</option>
+                    <option>lb</option>
+                    <option>fl oz</option>
+                  </select>
+                  <input type='text' required name='recipe.ingredients[].name' placeholder='Carrots' class='form-control ing-option' style='width: fit-content; display: inline-block;'></input>
+                  <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)'><i class="fa fa-minus" aria-hidden="true"></i></a>
+                </div>
+              </div>

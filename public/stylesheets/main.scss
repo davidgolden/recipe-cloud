@@ -4,6 +4,45 @@ $dark: #1A2D42;
 $primary-color: red;
 $secondary-color: orange;
 
+.small-form {
+	input[type=text], input[type=password], input[type=email] {
+		margin: 0 auto !important;
+		width: 90% !important;
+	}
+	button, input[type=submit] {
+		margin: 0 auto;
+		display: block;
+	}
+	label {
+		margin-left: 5%;
+	}
+}
+
+.form-group {
+    margin-bottom: 3px;
+}
+
+.form-check-inline {
+    background-color: $other;
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 0;
+}
+
+.badge-primary {
+    background-color: $other;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.form-check-label {
+    font-size: .8rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Quicksand', sans-serif;
 }
@@ -14,6 +53,7 @@ a, li, p, input {
 
 body {
     background-color: $light;
+    width: 100%;
 }
 
 .container {
@@ -220,7 +260,7 @@ i:hover {
 .recipe-show {
     img, .recipe-details {
         width: 100%;
-        padding: 5%;
+        padding-left: 5%;
         object-fit: cover;
     }
 }

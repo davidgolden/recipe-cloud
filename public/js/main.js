@@ -78,3 +78,23 @@ var addToGroceryList = function(form) {
     event.preventDefault();
   });
 };
+
+
+var checkForm = function(form) {
+  console.log('form being checked');
+  if(form.password.value != form.confirm.value) {
+    alert('Passwords do not match!');
+    return false;
+  }
+  return true;
+}
+
+var signupform = document.getElementById('signupform');
+
+signupform.addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  if(checkForm(form)) {
+    form.submit();
+  }
+})
