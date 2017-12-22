@@ -2,7 +2,7 @@
 
 <div class='container recipe-show'>
     <h1 class='text-center'><%= recipe.name %></h1>
-    <h5 class='text-center'>Recipe submitted by <a href='/users/<%= recipe.author._id %>'><%= recipe.author.username %></a>. <a href='<%= recipe.url %>' target='_blank'>View original recipe.</a></h5><br />
+    <h5 class='text-center'>Recipe submitted by <a href='/users/<%= recipe.author.id %>'><%= recipe.author.username %></a>. <a href='<%= recipe.url %>' target='_blank'>View original recipe.</a></h5><br />
     <div class='row'>
         <div class='col-md-6' style='text-align: center'>
             <div>
@@ -35,6 +35,7 @@
                                 <option <% if(ingredient.measurement == 'cup'){ %> selected='selected' <% }; %> >cup</option>
                                 <option <% if(ingredient.measurement == 'lb'){ %> selected='selected' <% }; %> >lb</option>
                                 <option <% if(ingredient.measurement == 'fl oz'){ %> selected='selected' <% }; %> >fl oz</option>
+                                <option <% if(ingredient.measurement == 'oz'){ %> selected='selected' <% }; %> >oz</option>
                               </select>
                               <input type="text" class="form-control form-control-sm" aria-label="Text input with checkbox" required name='ingredient[name]' value='<%= ingredient.name %>' style='width: min-content; display: inline-block;'>
                             </div>

@@ -32,16 +32,34 @@ ing.canBeAdded = function(m1, m2) {
         else if(m1 === '#' && m2 === 'fl oz') {
             return false;
         }
+        else if(m1 === '#' && m2 === 'oz') {
+            return false;
+        }
         else if(m1 === 'lb' && m2 === '#') {
             return false;
         }
         else if(m1 === 'lb' && m2 === 'fl oz') {
             return false;
         }
+        else if(m1 === 'lb' && m2 === 'oz') {
+            return false;
+        }
         else if(m1 === 'fl oz' && m2 === '#') {
             return false;
         }
         else if(m1 === 'fl oz' && m2 === 'lb') {
+            return false;
+        }
+        else if(m1 === 'fl oz' && m2 === 'oz') {
+            return false;
+        }
+        else if(m1 === 'oz' && m2 === 'fl oz') {
+            return false;
+        }
+        else if(m1 === 'oz' && m2 === '#') {
+            return false;
+        }
+        else if(m1 === 'oz' && m2 === 'lb') {
             return false;
         }
     }

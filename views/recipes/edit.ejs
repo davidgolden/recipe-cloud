@@ -31,6 +31,7 @@
                             <option <% if(ingredient.measurement == 'cup'){ %> selected='selected' <% }; %> >cup</option>
                             <option <% if(ingredient.measurement == 'lb'){ %> selected='selected' <% }; %> >lb</option>
                             <option <% if(ingredient.measurement == 'fl oz'){ %> selected='selected' <% }; %> >fl oz</option>
+                            <option <% if(ingredient.measurement == 'oz'){ %> selected='selected' <% }; %> >oz</option>
                         </select>
                         <input type="text" class="form-control form-control-sm" required style='width: 60%; display: inline-block;' aria-label="Text input with checkbox" name='ingredient[name]' value='<%= ingredient.name %>'>
                         <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)' style='border: 0; padding: .25rem .5rem;'><i class="fa fa-minus" aria-hidden="true"></i></a>

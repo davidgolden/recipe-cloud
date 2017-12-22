@@ -78,8 +78,8 @@
             <div class='form-group'>
               <input type="password" required name="password" placeholder='Password' class='form-control'>
             </div>
+              <a href='/forgot' style='margin-left: 5%'>Forgot Password</a>
             <button type="submit" class='btn btn-lg btn-success'>Login</button>
-            <a href='/forgot'>Forgot Password</a>
           </form>
       </div>
       </div>
@@ -147,6 +147,7 @@
               </div>
               <div class='form-group'>
                   <input type='text' name='recipe[image]' placeholder='Image URL' class='form-control'></input>
+                  <small> (Chrome/Firefox: Right click, select Copy Image; IE: Go to image properties to copy.)</small>
               </div>
               <div class='form-group'>
                   <textarea name='recipe[notes]' class='form-control' placeholder='Notes'></textarea>
@@ -163,6 +164,7 @@
                     <option>cup</option>
                     <option>lb</option>
                     <option>fl oz</option>
+                    <option>oz</option>
                   </select>
                   <input type='text' required name='recipe.ingredients[].name' placeholder='Carrots' class='form-control form-control-sm ing-option' style='width: 60%; display: inline-block;'></input>
                   <a class='btn btn-md btn-danger delete-ingredient-button' onclick='deleteIngredient(this)' style='border: 0; padding: .25rem .5rem;'><i class="fa fa-minus" aria-hidden="true"></i></a>

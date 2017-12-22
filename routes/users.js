@@ -217,6 +217,17 @@ router.post('/grocery-list', middleware.isLoggedIn, function(req, res) {
     res.redirect('back');
 })
 
+// DISPLAY GROCERY LIST STORE VERSION
+router.get('/grocery-list-text', middleware.isLoggedIn, function(req, res) {
+    User.findById(req.user._id).populate('menu').exec(function(err, user) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render('grocery-list-text', {groceryList: user.groceryList, menu: user.menu });
+        }
+    })
+})
+
 
 
 module.exports = router;

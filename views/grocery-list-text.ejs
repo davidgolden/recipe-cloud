@@ -1,0 +1,31 @@
+<% include partials/header %>
+
+
+
+<div class='container'>
+
+    <form action='/grocery-list?_method=PUT' method='POST'>
+                    <br /><h3>My Menu:</h3>
+                    <% menu.forEach(function(recipe,i) { %>
+                      <div>
+                      <%= i+1 %>
+                      <input type="checkbox" aria-label="Checkbox for following text input" name='menu' value='<%= recipe._id %>'>
+                      <label for='menu'><a href='<%= recipe.url %>'><%= recipe.name %></a></li></label>
+                      </div>
+                    <% }) %>
+                    <br /><h3>My Grocery List:</h3>
+                    <% groceryList.forEach(function(item, i) { %>
+                        <div class='form-group'>
+                              <input type='hidden' name='item[id]' value='<%= item._id %>'>
+                                <input type='hidden' name='item[num]' value='off' />
+                                <input type="checkbox" aria-label="Checkbox for following text input" name='item[num]' value='on'>
+                              <%= item.quantity %> <%= item.measurement %> <%= item.name %>                        
+                        </div>
+                    <% }) %><br />
+                    <button class='btn btn-md btn-success' type='submit'>Delete Selected/Update List</button>
+                    <a href='/grocery-list' class='btn btn-md btn-success'>Switch to Normal Mode</a>
+                </form>
+
+</div>
+
+<% include partials/footer %>

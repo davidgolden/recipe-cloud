@@ -83,8 +83,8 @@ router.post('/forgot', function(req, res) {
                         rejectUnauthorized: false
                     },
                     auth: {
-                        user: 'david@tabletofarmcompost.com',
-                        pass: 'Dasabija92'
+                        user: process.env.DREAMUSER,
+                        pass: process.env.DREAMPASS
                     }
                 });
             

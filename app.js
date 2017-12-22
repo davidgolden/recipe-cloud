@@ -18,7 +18,7 @@ var userRoutes = require('./routes/users'),
     
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://admin:admin@ds257495.mlab.com:57495/grocery', { useMongoClient: true })
+mongoose.connect(process.env.MONGO, { useMongoClient: true })
       .then(() => console.log(`Database connected`))
       .catch(err => console.log(`Database connection error: ${err.message}`));
       
