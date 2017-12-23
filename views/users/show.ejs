@@ -11,9 +11,9 @@
         <h3>There doesn't seem to be anything here...</h3>
     <% } else { %>
     
+    <button class='btn btn-success btn-md' onclick='sortByTag("all")'>All</button>
     <% tags.forEach(function(tag) { %>
         <button class='btn btn-success btn-md' onclick='sortByTag("<%= tag %>")'><%= tag %></button>
-        
     <% }) %>
     
         <div class='card-columns' style='padding-right: 20px;'>

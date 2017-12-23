@@ -25,19 +25,29 @@ var sortByTag = function(tag) {
   let unmatchedRecipes = allRecipes.filter(recipe => recipe.value.includes(tag) === false);
   let matchedRecipes = allRecipes.filter(recipe => recipe.value.includes(tag) === true);
   console.log(unmatchedRecipes)
-  unmatchedRecipes.forEach(recipe => {
-    recipe.parentElement.style.opacity = '0';
-    setTimeout(function() {
-      recipe.parentElement.style.display = 'none';
-    }, 500);
-  })
-  matchedRecipes.forEach(recipe => {
+  if(tag === 'all') {
+    allRecipes.forEach(recipe => {
     recipe.parentElement.style.display = 'inline-block';
     
     setTimeout(function() {
       recipe.parentElement.style.opacity = '1';
     }, 500);
   })
+  } else {
+    unmatchedRecipes.forEach(recipe => {
+      recipe.parentElement.style.opacity = '0';
+      setTimeout(function() {
+        recipe.parentElement.style.display = 'none';
+      }, 500);
+    })
+    matchedRecipes.forEach(recipe => {
+      recipe.parentElement.style.display = 'inline-block';
+      
+      setTimeout(function() {
+        recipe.parentElement.style.opacity = '1';
+      }, 500);
+    })
+  }
   //display none for unmatched recipes
   //dispaly block for matched recipes
 }
