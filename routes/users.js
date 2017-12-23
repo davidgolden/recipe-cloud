@@ -218,6 +218,35 @@ router.get('/grocery-list-text', middleware.isLoggedIn, function(req, res) {
     })
 })
 
+//EDIT USER FORM
+router.get('/users/:user_id/edit', middleware.isLoggedIn, function(req, res) {
+    User.findById(req.user._id, function(err, user) {
+        if(err) {
+            req.flash('error', err.message);
+            return res.redirect('back');
+        }
+        res.render('users/edit', {user: user});
+    })
+})
+
+// EDIT USER ROUTE
+router.post('/users/:user_id', middleware.isLoggedIn, function(req, res) {
+    User.findOne(req.user._id, function(err, user) {
+        if(err) {
+            req.flash('error', err.message);
+            return res.redirect('back');
+        }
+        
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        user.save();
+
+        req.flash('success', 'Successfully updated your portfolio!');
+        res.redirect('back');
+    })
+})
+
 
 
 module.exports = router;
