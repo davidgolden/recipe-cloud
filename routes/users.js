@@ -13,16 +13,6 @@ router.post('/users', function(req, res) {
     
     req.flash('success', `Wecome to Grocery, ${user.username}`);
     res.redirect('/');
-    // User.register(newUser, req.body.password, function(err, user) {
-    //     if(err) {
-    //         req.flash('error', err.message);
-    //         return res.redirect('back');
-    //     }
-    //     passport.authenticate('local')(req, res, function() {
-    //         req.flash('success', `Wecome to Grocery, ${user.username}`);
-    //         res.redirect('/');
-    //     })
-    // })
 })
 
 // SHOW USER'S RECIPES
@@ -166,7 +156,7 @@ router.post('/grocery-list', middleware.isLoggedIn, function(req, res) {
 
         // determine if ingredient name exists in grocery list
         // if ingredient name does not exist, continue as normal
-        User.count({ "_id": req.user._id, "$or": [{"groceryList.name": name}, {"groceryList.name": name+'s'}, {"groceryList.name": name.slice(0,-1)} ] }, function(err, count) {
+        User.count({ "_id": req.user._id, "$or": [{"groceryList.name": name}, {"groceryList.name": name+'s'}, {"groceryList.name": name.slice(0,-1)}, {"groceryList.name": name.slice(0,-2)}, {"groceryList.name": name+'es'} ] }, function(err, count) {
             if (err) {
                 req.flash('error', err.message);
                 res.redirect('back');
@@ -186,7 +176,7 @@ router.post('/grocery-list', middleware.isLoggedIn, function(req, res) {
             else if (count === 1) {
                 // ingredient exists, do something
                 
-                User.findOne({ "_id": req.user._id, "$or": [{"groceryList.name": name}, {"groceryList.name": name+'s'}, {"groceryList.name": name.slice(0,-1)} ] }, function(err, user) {
+                User.findOne({ "_id": req.user._id, "$or": [{"groceryList.name": name}, {"groceryList.name": name+'s'}, {"groceryList.name": name.slice(0,-1)}, {"groceryList.name": name.slice(0,-2)}, {"groceryList.name": name+'es'} ] }, function(err, user) {
                     if (err) {
                         req.flash('error', err.message);
                         res.redirect('back');
