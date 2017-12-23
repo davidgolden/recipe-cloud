@@ -85,6 +85,26 @@ var deleteIngredient= function(ing) {
   }
 }
 
+document.getElementById('recipeURL').addEventListener('input', function(event) {
+  let recipeImage = document.getElementById('recipeImage');
+  let imageLoader = document.getElementById('imageLoad');
+  let imageURL = document.getElementsByName('recipe[image]')[0];
+  imageLoader.style.display = 'block';
+  recipeImage.setAttribute('src', '<i class="fa fa-spinner" aria-hidden="true"></i>');
+  let xml = new XMLHttpRequest();
+  xml.open("POST", "/scrape", true);
+  xml.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+  xml.send(JSON.stringify({imageUrl: event.target.value}));
+  xml.onreadystatechange = function() {
+    if (xml.readyState === 4) {
+      let metadata = xml.response;
+      imageLoader.style.display = 'none';
+      recipeImage.setAttribute('src', metadata);
+      imageURL.setAttribute('value', metadata);
+    }
+  }
+})
+
 var form = document.getElementById('ingredients-form');
 
 form.addEventListener('submit', function(event) {

@@ -1,3 +1,8 @@
+#recipeImage {
+  width: 100%;
+  height: 160px;
+  object-fit: contain; }
+
 .alert-danger {
   color: white;
   background-color: #A6373D;

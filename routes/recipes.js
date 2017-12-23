@@ -4,6 +4,7 @@ var User = require('../models/user');
 var Recipe = require('../models/recipe');
 var middleware = require('../middleware');
 var ing = require('../public/js/conversions');
+const urlMetadata = require('url-metadata');
 
 // SHOW ALL RECIPES
 router.get('/recipes', middleware.isLoggedIn, function(req, res) {
@@ -25,6 +26,18 @@ router.get('/recipes', middleware.isLoggedIn, function(req, res) {
 router.get('/recipes/new', middleware.isLoggedIn, function(req, res) {
     res.render('recipes/new');
 });
+
+//IMAGE SCRAPER
+router.post('/scrape', function(req, res) {
+    urlMetadata(req.body.imageUrl).then(
+      function (metadata) { // success handler
+        res.send(metadata["og:image"]);
+      },
+      function (error) { // failure handler
+        console.log(error)
+      })
+})
+
 
 // CREATE RECIPE ROUTE
 router.post('/recipes', middleware.isLoggedIn, function(req, res) {

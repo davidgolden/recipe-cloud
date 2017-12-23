@@ -2,13 +2,14 @@
 <html>
     <head>
         <title>Recipe Cloud</title>
-        <meta property="og:description" content="Add, Manage, and Share Recipes and Create Grocery Lists." />
         <link rel="icon" href='/images/recipecloud.png'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
         <link rel="stylesheet" href="/stylesheets/main.css">
         <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Quicksand" rel="stylesheet">
         <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no">
+        <meta property="og:description" content="Add, Manage, and Share Recipes and Create Grocery Lists." />
+        <meta property="og:image" content="http://www.recipe-cloud.com/images/addrecipe.png" />
         <style type="text/css">
           .modal-open { position: fixed; width: 100%; }
         </style>
@@ -144,11 +145,15 @@
                   <input type='text' required name='recipe[name]' placeholder='Recipe Name' class='form-control'></input>
               </div>
               <div class='form-group'>
-                  <input type='text' name='recipe[url]' placeholder='Recipe Link' class='form-control'></input>
+                  <input type='text' id='recipeURL' name='recipe[url]' placeholder='Recipe Link' class='form-control'></input>
               </div>
               <div class='form-group'>
-                  <input type='text' name='recipe[image]' placeholder='Image URL' class='form-control'></input>
-                  <small class='form-text text-muted'> (Chrome/Firefox: Right click, select Copy Image; IE: Go to image properties to copy.)</small>
+                  <div id='imageLoad' style='text-align: center; display: none;'>
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw" style='color: #ED8A27; font-size: 1.7rem;'></i>
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <img alt='' src='' id='recipeImage'>
+                  <input value='' type='hidden' name='recipe[image]'>
               </div>
               <div class='form-group'>
                   <textarea name='recipe[notes]' class='form-control' placeholder='Notes'></textarea>

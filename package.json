@@ -19,6 +19,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.4.0",
+    "url-metadata": "^2.1.7",
     "urlsafe-base64": "^1.0.0"
   },
   "devDependencies": {},
