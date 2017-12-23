@@ -77,6 +77,9 @@ router.post('/add-recipe', middleware.isLoggedIn, function(req, res) {
         if (has === false) {
             user.recipes.push(recipe);
             user.save();
+            
+            req.flash('success', 'Added Recipe to Cloud!');
+            res.redirect('back');
         }
     });
 });
@@ -293,7 +296,7 @@ router.post('/recipes/:recipe/add', function(req, res) {
         });
     }
 
-    req.flash('success', 'Added ingredients to your grocery list!');
+    req.flash('success', 'Added recipe to your grocery list!');
     res.redirect('back');
 });
 

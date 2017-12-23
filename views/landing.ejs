@@ -3,27 +3,49 @@
 <div class='container'>
     <div class='text-center'>
         <hr>
-        <h1 class='landing-text'>Welcome to <em>Recipe Cloud</em> <i class="fa fa-cloud" aria-hidden="true"></i></h1>
+        <% if(!currentUser) { %>
+            <h1 class='landing-text'>Welcome to <em>Recipe Cloud</em> <i class="fa fa-cloud" aria-hidden="true"></i></h1>
+        <% } else { %>
+            <h1 class='landing-text'>Welcome, <em><%= currentUser.username %></em> <i class="fa fa-cloud" aria-hidden="true"></i></h1>
+        <% } %>
+        
         <h3 class='landing-text'>Add, Manage, and Share Recipes and Create Grocery Lists.</h3><br />
         
         <% if(!currentUser) { %>
             <button class='btn btn-lg btn-success' data-toggle="modal" data-target="#login">Login</button>
+            <button class='btn btn-lg btn-success' data-toggle="modal" data-target="#signup">Sign Up</button>
         <% } else { %>
             <button data-toggle="modal" data-target="#addrecipe" class='btn btn-lg btn-success'>Add a Recipe</button>
+            <a href='/users/<%= currentUser._id %>' class='btn btn-lg btn-success'>My Recipe Cloud</a>
+            <a href='/grocery-list' class='btn btn-lg btn-success'>Grocery List</a>
         <% } %>
-        <br />
         <hr>
+        <% if(!currentUser) { %>
         <div class='row landing-imgs' style='margin-top: 50px;'>
             <div class='col-md-6'>
+                
+                <h6>Add recipes to your recipe cloud, then easily populate your grocery list with their ingredients.</h6>
                 <img src='/images/addrecipe.png' style='width: 100%;'>
-                <h5>Easily submit recipes to add to your recipe cloud, and use these recipes to populate your grocery list.</h5>
             </div>
             <div class='col-md-6'>
+                
+                <h6>Browse yours or others' recipes by tag, then easily add those recipes to your recipe cloud.</h6>
                 <img src='/images/recipebook.png' style='width: 100%;'>
-                <h5>Browse yours or others' recipes, then easily add those recipes to your recipe cloud.</h5>
             </div>
-        
         </div>
+        <div class='row landing-imgs' style='margin-top: 20px;'>
+            <div class='col-md-6'>
+                
+                <h6>Add ingredients to your list and recipes to your menu with a single click. Duplicate ingredients are automatically totaled.</h6>
+                <img src='/images/populatelist.png' style='width: 100%;'>
+            </div>
+            <div class='col-md-6'>
+                
+                <h6>Switch to store mode to view and delete ingredients as you shop.</h6>
+                <img src='/images/storemode.png' style='width: 100%;'>
+            </div>
+        </div>
+        <% } %>
         
         
     </div>

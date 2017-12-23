@@ -18,6 +18,9 @@
                         <div class='form-group'>
                               <input type='hidden' name='item[id]' value='<%= item._id %>'>
                                 <input type='hidden' name='item[num]' value='off' />
+                                <input type='hidden' name='item[quantity]' value='<%= item.quantity %>'>
+                                <input type='hidden' name='item[measurement]' value='<%= item.measurement %>'>
+                                <input type='hidden' name='item[name]' value='<%= item.name %>'>
                                 <input type="checkbox" aria-label="Checkbox for following text input" name='item[num]' value='on'>
                               <%= item.quantity %> <%= item.measurement %> <%= item.name %>                        
                         </div>

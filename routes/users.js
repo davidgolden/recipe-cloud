@@ -6,15 +6,6 @@ var Recipe = require('../models/recipe');
 var middleware = require('../middleware');
 var ing = require('../public/js/conversions');
 
-// CREATE USER
-router.post('/users', function(req, res) {
-    let user = new User({username: req.body.username, email: req.body.email.toLowerCase(), password: req.body.password});
-    user.save();
-    
-    req.flash('success', `Wecome to Grocery, ${user.username}`);
-    res.redirect('/');
-})
-
 // SHOW USER'S RECIPES
 router.get('/users/:user_id', middleware.isLoggedIn, function(req, res) {
 
@@ -59,7 +50,7 @@ router.put('/grocery-list', middleware.isLoggedIn, function(req, res) {
                     }
                 });
         }
-        else if(Array.isArray(menu) === false && menu !== undefined) {
+        else if(Array.isArray(menu) === false) {
             User.findById(req.user._id, function(err, user) {
                     if (err) {
                         console.log(err);
@@ -242,6 +233,17 @@ router.post('/users/:user_id', middleware.isLoggedIn, function(req, res) {
         user.password = req.body.password;
         user.save();
 
+        // now update all recipe's authors with username
+        Recipe.find({ "author.id": user._id }, function(err, foundRecipes) {
+            if(err) {
+                req.flash('error', err.message);
+                return res.redirect('back');
+            }
+            foundRecipes.forEach(recipe => {
+                recipe.author.username = req.body.username;
+                recipe.save();
+            })
+        })
         req.flash('success', 'Successfully updated your portfolio!');
         res.redirect('back');
     })

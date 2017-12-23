@@ -9,8 +9,31 @@ router.get('/', function(req, res) {
     res.render('landing');
 })
 
+// CREATE USER
+router.post('/users', function(req, res, next) {
+    
+    User.findOne({ "$or":[{ username: req.body.username }, { email: req.body.email }] }, function(err, user) {
+        if(user) {
+            req.flash('error', 'A user already exists with that username or email!');
+            return res.redirect('back');
+        }
+        
+        let newUser = new User({username: req.body.username, email: req.body.email.toLowerCase(), password: req.body.password});
+        newUser.save();
+
+        req.logIn(newUser, function(err) {
+          if (err) return next(err);
+          req.flash('success', `Wecome to Recipe Cloud, ${newUser.username}`);
+          return res.redirect('/');
+        });
+    })
+        
+
+    
+})
+
 // handle login logic
-router.post('/login', usernameToLowerCase, function(req, res, next) {
+router.post('/login', emailToLowerCase, function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) return next(err);
     if (!user) {
@@ -23,7 +46,8 @@ router.post('/login', usernameToLowerCase, function(req, res, next) {
     });
   })(req, res, next);
 });
-function usernameToLowerCase(req, res, next){
+
+function emailToLowerCase(req, res, next){
     req.body.email = req.body.email.toLowerCase();
     next();
 }

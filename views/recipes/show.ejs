@@ -42,7 +42,7 @@
                           </div>
                         </div>
                     <% }) %><br />
-                    <button class='btn btn-md btn-success' type='submit'>Add Ingredients to Grocery List</button>
+                    <button class='btn btn-md btn-success' type='submit'>Add Recipe to Grocery List</button>
                 </form>
             </div>
         </div>
@@ -65,11 +65,12 @@
                 <input class='btn btn-md btn-primary' type='submit' value='Delete Recipe' style='cursor: pointer;'></input>
             </form>
             
-        <% } else if(has === false) { %>
-            <button type='button' class='btn btn-primary add-recipe' 
-            onclick='addRecipe(<%= JSON.stringify(recipe._id) %>, this)'>
-            Add Recipe to My Cloud
-            </button>
+        <% } if(has === false) { %>
+            <form action='/add-recipe' method='POST'>
+                <input type='hidden' name='recipe' value='<%= recipe._id %>'>
+                <button type='submit' class='btn btn-primary add-recipe'>Add Recipe to My Cloud</button>
+            </form>
+            
         <% } %>
     </div>
     
