@@ -48,7 +48,8 @@ li, p, input {
 
 body {
   background-color: #A6E5CD;
-  width: 100%; }
+  width: 100%;
+  background-image: url("/images/textured-stripes.png"); }
 
 .container {
   background-color: transparent;
