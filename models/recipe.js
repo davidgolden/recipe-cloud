@@ -1,16 +1,16 @@
 var mongoose = require('mongoose');
 
 var recipeSchema = new mongoose.Schema({
-    name: String,
-    url: String,
+    name: { type: String, trim: true },
+    url: { type: String, trim: true },
     notes: String,
-    image: String,
+    image: { type: String, trim: true },
     tags: [String],
     ingredients: [
             {
                 quantity: Number,
                 measurement: String,
-                name: { type: String, lowercase: true }
+                name: { type: String, lowercase: true, trim: true }
             },
         ],
     author: {

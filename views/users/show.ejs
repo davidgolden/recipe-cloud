@@ -11,10 +11,16 @@
         <h3>There doesn't seem to be anything here...</h3>
     <% } else { %>
     
+    <% tags.forEach(function(tag) { %>
+        <button class='btn btn-success btn-md' onclick='sortByTag("<%= tag %>")'><%= tag %></button>
+        
+    <% }) %>
+    
         <div class='card-columns' style='padding-right: 20px;'>
         <% if(user.recipes.length > 0) { %>
             <% user.recipes.forEach(function(recipe) { %>
                     <div class="card" >
+                        <input type='hidden' name='tags' value='<%= recipe.tags %>'>
                         <a class='recipe-card' href='/recipes/<%= recipe._id %>'>
                         <img class="card-img-top" src="<%= recipe.image %>" alt="Recipe Image">
                         <div class="card-body">

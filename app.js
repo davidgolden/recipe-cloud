@@ -77,7 +77,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.locals.tags = ['Dinner', 'Quick/Easy', 'Dessert', 'Vegetarian', 'Vegan', 'Dairy-Free'];
+app.locals.tags = ['Dinner', 'Breakfast', 'Dessert', 'Quick/Easy', 'Vegetarian', 'Vegan', 'Dairy-Free', 'Gluten-Free'];
 
 app.use('/', indexRoutes);
 app.use('/', userRoutes);

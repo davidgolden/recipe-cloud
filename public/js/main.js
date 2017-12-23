@@ -20,6 +20,28 @@ signupform.addEventListener('submit', function(event) {
   }
 })
 
+var sortByTag = function(tag) {
+  let allRecipes = Array.from(document.getElementsByName('tags'));
+  let unmatchedRecipes = allRecipes.filter(recipe => recipe.value.includes(tag) === false);
+  let matchedRecipes = allRecipes.filter(recipe => recipe.value.includes(tag) === true);
+  console.log(unmatchedRecipes)
+  unmatchedRecipes.forEach(recipe => {
+    recipe.parentElement.style.opacity = '0';
+    setTimeout(function() {
+      recipe.parentElement.style.display = 'none';
+    }, 500);
+  })
+  matchedRecipes.forEach(recipe => {
+    recipe.parentElement.style.display = 'inline-block';
+    
+    setTimeout(function() {
+      recipe.parentElement.style.opacity = '1';
+    }, 500);
+  })
+  //display none for unmatched recipes
+  //dispaly block for matched recipes
+}
+
 function addRecipe(recipe, event, remove){
   let xml = new XMLHttpRequest();
   xml.open("POST", "/add-recipe", true);

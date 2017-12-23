@@ -59,7 +59,7 @@
     
     
     <div class='text-center' style='margin-top: 20px;'>
-        <% if(currentUser._id.equals(recipe.author.id)) { %>
+        <% if(currentUser._id.equals(recipe.author.id) || currentUser.isAdmin === true) { %>
             <a class='btn btn-md btn-secondary' href='/recipes/<%= recipe._id %>/edit'>Edit Recipe</a>
             <form action='/recipes/<%= recipe._id %>?_method=DELETE' method='post' style='display: inline;'>
                 <input class='btn btn-md btn-primary' type='submit' value='Delete Recipe' style='cursor: pointer;'></input>

@@ -12,6 +12,7 @@ var groceryListSchema = mongoose.Schema({
 var userSchema = new mongoose.Schema({
   username: {type: String, required: true, unique: true },
   email: {type: String, required: true, unique: true, lowercase: true},
+  isAdmin: Boolean,
   password: String,
   resetToken: String,
   tokenExpires: Date,
