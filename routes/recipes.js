@@ -29,7 +29,7 @@ router.get('/recipes/new', middleware.isLoggedIn, function(req, res) {
 
 //IMAGE SCRAPER
 router.post('/scrape', function(req, res) {
-    urlMetadata(req.body.imageUrl).then(
+    urlMetadata(req.body.imageUrl, {maxRedirects: 1}).then(
       function (metadata) { // success handler
         res.send(metadata["og:image"]);
       },

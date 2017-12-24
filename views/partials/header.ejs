@@ -104,6 +104,7 @@
             <form method='POST' action='/users' class='small-form' id='signupform'>
                 <div class='form-group'>
                     <input type='text' required name='username' placeholder='Username' class='form-control'></input>
+                    <small class='text-muted text'>Username is public facing.</small>
                 </div>
                 <div class='form-group'>
                     <input type='email' required name='email' placeholder='Email' class='form-control'></input>
@@ -152,8 +153,9 @@
                     <i class="fa fa-spinner fa-pulse fa-3x fa-fw" style='color: #ED8A27; font-size: 1.7rem;'></i>
                     <span class="sr-only">Loading...</span>
                   </div>
-                  <img alt='' src='' id='recipeImage'>
-                  <input value='' type='hidden' name='recipe[image]'>
+                  <img src='' style='display: none;' id='recipeImage'>
+                  <small id='imageText' style='display: none;'>No image found. Please enter image URL:</small>
+                  <input value='' type='hidden' name='recipe[image]' class='form-control' placeholder='Image URL'>
               </div>
               <div class='form-group'>
                   <textarea name='recipe[notes]' class='form-control' placeholder='Notes'></textarea>
