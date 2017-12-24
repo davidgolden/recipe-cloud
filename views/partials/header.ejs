@@ -104,7 +104,7 @@
             <form method='POST' action='/users' class='small-form' id='signupform'>
                 <div class='form-group'>
                     <input type='text' required name='username' placeholder='Username' class='form-control'></input>
-                    <small class='text-muted text'>Username is public facing.</small>
+                    <small class='text-muted text' style='margin-left: 5%;'>Note: Username is public facing.</small>
                 </div>
                 <div class='form-group'>
                     <input type='email' required name='email' placeholder='Email' class='form-control'></input>
@@ -150,6 +150,7 @@
               </div>
               <div class='form-group'>
                   <div id='imageLoad' style='text-align: center; display: none;'>
+                    <small>Loading Image...</small><br />
                     <i class="fa fa-spinner fa-pulse fa-3x fa-fw" style='color: #ED8A27; font-size: 1.7rem;'></i>
                     <span class="sr-only">Loading...</span>
                   </div>
@@ -217,3 +218,14 @@
     </div>
   </div>
 <% } %>
+
+<script>
+  document.getElementsByName('username')[0].addEventListener('keypress', function (event) {
+    var regex = new RegExp("^[a-zA-Z0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+       event.preventDefault();
+       return false;
+    }
+});
+</script>
