@@ -102,32 +102,45 @@ recipeURL.addEventListener('keydown', function () {
 });
 
 //user is "finished typing," do something
-function doneTyping () {
+function doneTyping() {
+  let recipeImage = document.getElementById('recipeImage'); // <img>
+  let imageLoader = document.getElementById('imageLoad'); // spinning icon
+  let recipeURL = document.getElementsByName('recipe[url]')[0]; // link to recipe (to send in req)
+  let imageURLInput = document.getElementsByName('recipe[image]')[0]; // input field to fill value
+  imageLoader.style.display = 'block'; // when done typing, start spinner
+  // recipeImage.setAttribute('src', '<i class="fa fa-spinner" aria-hidden="true"></i>');
   
-  let recipeImage = document.getElementById('recipeImage');
-  let imageLoader = document.getElementById('imageLoad');
-  let imageURL = document.getElementsByName('recipe[image]')[0];
-  imageLoader.style.display = 'block';
-  recipeImage.setAttribute('src', '<i class="fa fa-spinner" aria-hidden="true"></i>');
   let xml = new XMLHttpRequest();
   xml.open("POST", "/scrape", true);
   xml.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-  xml.send(JSON.stringify({imageUrl: imageURL.value}));
+  xml.send(JSON.stringify({imageUrl: recipeURL.value}));
+  
   xml.onreadystatechange = function() {
+    console.log('load')
     if (xml.readyState === 4) {
       let metadata = xml.response;
-      
-      recipeImage.setAttribute('src', metadata);
-      imageURL.setAttribute('value', metadata);
-      console.log(metadata)
-      if(metadata === '') {
-        document.getElementById('imageText').style.display = 'block';
-        imageURL.setAttribute('type', 'text');
-        imageURL.style.display = 'block';
-        imageLoader.style.display = 'none';
+
+      if(xml.status === 200 && metadata !== '') { // on success
+        
+        console.log(metadata)
+        imageLoader.style.display = 'none'; // turn off spinner
+        recipeImage.setAttribute('src', metadata); // set image source
+        recipeImage.style.display = 'block'; // turn image on
+        imageURLInput.setAttribute('value', metadata); // set value of input
+        imageURLInput.style.display = 'none';
+        document.getElementById('imageText').style.display = 'none'; // turn off input field
+      } else { // no image found
+        document.getElementById('imageText').style.display = 'block'; // turn on input field
+        imageURLInput.setAttribute('value', ''); // set value of input
+        imageURLInput.setAttribute('type', 'text'); // turn on input field
+        imageURLInput.style.display = 'block'; // turn on input field
+        recipeImage.style.display = 'none'; // turn off image
+        imageLoader.style.display = 'none'; // turn off spinner
       }
     }
   }
+  
+  
 }
 
 // document.getElementById('recipeURL').addEventListener('input', function(event) {
