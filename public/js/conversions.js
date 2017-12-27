@@ -21,8 +21,7 @@ ing.createIng = function(arr, i) {
         };
         return newItem;
     }
-    
-}
+};
 
 ing.canBeAdded = function(m1, m2) {
     if(m1 !== m2) {
@@ -64,7 +63,7 @@ ing.canBeAdded = function(m1, m2) {
         }
     }
     return true;
-}
+};
 
 // return { quantity: x, measurement: y }
 // m1 is grocery list item, m2 is new ingredient (adding new ingredient to grocery list)

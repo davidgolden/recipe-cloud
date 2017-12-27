@@ -1,4 +1,3 @@
-var User = require('../models/user');
 var Recipe = require('../models/recipe');
 
 var middlewareObj = {};
@@ -9,7 +8,7 @@ middlewareObj.isLoggedIn = (req, res, next) => {
   }
   req.flash('error', 'You need to be logged in to do that!'); // place flash before redirect
   res.redirect('/');
-}
+};
 
 middlewareObj.checkRecipeOwnership = (req, res, next) => {
   // is user logged in?
@@ -26,17 +25,15 @@ middlewareObj.checkRecipeOwnership = (req, res, next) => {
           next();
         } else {
           // if not, redirect
-          req.flash('error', "You don't have permission to do that!")
+          req.flash('error', "You don't have permission to do that!");
           res.redirect('back');
         }
       }
-    })
+    });
   } else {
     req.flash('error', 'You need to be logged in to do that!'); // place flash before redirect
     res.redirect('back');
   }
-}
-
-
+};
 
 module.exports = middlewareObj;

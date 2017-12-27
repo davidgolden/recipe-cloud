@@ -1,14 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/user');
-var Recipe = require('../models/recipe');
-var middleware = require('../middleware');
-var ing = require('../public/js/conversions');
-const urlMetadata = require('url-metadata');
+const express = require('express'),
+    router = express.Router(),
+    User = require('../models/user'),
+    Recipe = require('../models/recipe'),
+    middleware = require('../middleware'),
+    ing = require('../public/js/conversions'),
+    urlMetadata = require('url-metadata');
 
 // SHOW ALL RECIPES
 router.get('/recipes', middleware.isLoggedIn, function(req, res) {
-    var myRecipes = req.user.recipes;
+    let myRecipes = req.user.recipes;
     // find all recipes not in user's recipe cloud
     Recipe.find({ '_id': { $nin: myRecipes } }, function(err, recipes) {
         if (err) {
@@ -30,14 +30,13 @@ router.get('/recipes/new', middleware.isLoggedIn, function(req, res) {
 //IMAGE SCRAPER
 router.post('/scrape', function(req, res) {
     urlMetadata(req.body.imageUrl).then(
-        function (metadata) { // success handler
-            console.log('found metadata?')
+        function(metadata) { // success handler
             return res.send(metadata["og:image"]);
-          },
-          function (error) { // failure handler
-            console.log('an error!!!')
-          })
-})
+        },
+        function(error) { // failure handler
+            return;
+        });
+});
 
 
 // CREATE RECIPE ROUTE
@@ -51,35 +50,33 @@ router.post('/recipes', middleware.isLoggedIn, function(req, res) {
         else {
             Recipe.create(req.body.recipe, function(err, newRecipe) {
                 if (err) {
-                    console.log(err);
-                    res.redirect('back');
+                    req.flash('error', err.message);
+                    return res.redirect('back');
                 }
-                else {
-                    // add author info to recipe
+                // add author info to recipe
 
-                    newRecipe.ingredients = JSON.parse(req.body.ingredientArray);
-                    newRecipe.author.id = req.user._id;
-                    newRecipe.author.username = req.user.username;
+                newRecipe.ingredients = JSON.parse(req.body.ingredientArray);
+                newRecipe.author.id = req.user._id;
+                newRecipe.author.username = req.user.username;
 
-                    // save recipe
-                    newRecipe.save();
-                    // add recipe to user
-                    user.recipes.push(newRecipe);
-                    user.save();
+                // save recipe
+                newRecipe.save();
+                // add recipe to user
+                user.recipes.push(newRecipe);
+                user.save();
 
-                    res.redirect(`/users/${req.user._id}`);
-                }
+                res.redirect(`/users/${req.user._id}`);
             });
         }
     });
 });
 
 // ADD RECIPE TO OWN CLOUD
-router.post('/add-recipe', middleware.isLoggedIn, function(req, res) {
+router.post('/recipes/add', middleware.isLoggedIn, function(req, res) {
     let recipe = req.body.recipe;
     User.findById(req.user._id, function(err, user) {
         if (err) {
-            req.flash('error', err.message)
+            req.flash('error', err.message);
             return res.redirect('back');
         }
         let has = false;
@@ -91,7 +88,7 @@ router.post('/add-recipe', middleware.isLoggedIn, function(req, res) {
         if (has === false) {
             user.recipes.push(recipe);
             user.save();
-            
+
             req.flash('success', 'Added Recipe to Cloud!');
             res.redirect('back');
         }
@@ -103,10 +100,14 @@ router.get('/recipes/:recipe_id', middleware.isLoggedIn, function(req, res) {
     Recipe.findById(req.params.recipe_id, function(err, recipe) {
         if (err) {
             req.flash('error', err.message);
-            res.redirect('back');
+            return res.redirect('back');
         }
         else {
             User.findById(req.user._id, function(err, user) {
+                if (err) {
+                    req.flash('error', err.message);
+                    return res.redirect('back');
+                }
                 // check if user has recipe in recipe cloud
                 let has = false;
                 for (let i = 0; i < user.recipes.length; i++) {
@@ -115,8 +116,7 @@ router.get('/recipes/:recipe_id', middleware.isLoggedIn, function(req, res) {
                     }
                 }
                 res.render('recipes/show', { recipe: recipe, has: has });
-            })
-
+            });
         }
     });
 });
@@ -126,11 +126,9 @@ router.get('/recipes/:recipe_id/edit', middleware.isLoggedIn, function(req, res)
     Recipe.findById(req.params.recipe_id, function(err, recipe) {
         if (err) {
             req.flash('error', err.message);
-            res.redirect('back');
+            return res.redirect('back');
         }
-        else {
-            res.render('recipes/edit', { recipe: recipe });
-        }
+        res.render('recipes/edit', { recipe: recipe });
     });
 });
 
@@ -177,30 +175,25 @@ router.delete('/recipes/:recipe_id', middleware.checkRecipeOwnership, function(r
     Recipe.findByIdAndRemove(req.params.recipe_id, function(err) {
         if (err) {
             req.flash('error', err.message);
-            res.redirect('back');
+            return res.redirect('back');
         }
-        else {
-            req.flash('success', 'Recipe Deleted');
-            res.redirect(`/users/${req.user._id}`);
-        }
+        req.flash('success', 'Recipe Deleted');
+        res.redirect(`/users/${req.user._id}`);
     });
 });
 
 // AJAX Remove (not delete) Recipe Route
-router.put('/remove-recipe', function(req, res) {
+router.put('/recipes/remove', function(req, res) {
     var recipe = req.body.recipe;
     User.findById(req.user._id, function(err, user) {
         if (err) {
-            console.log(err);
+            return;
         }
-        else {
-            for (var i = 0; i < user.recipes.length; i++) {
-                if (user.recipes[i].toString() === recipe.toString()) {
-                    user.recipes.splice(i, 1);
-                    user.save();
-                }
+        for (var i = 0; i < user.recipes.length; i++) {
+            if (user.recipes[i].toString() === recipe.toString()) {
+                user.recipes.splice(i, 1);
+                user.save();
             }
-
         }
     });
 });
@@ -210,17 +203,19 @@ router.post('/recipes/:recipe/add', function(req, res) {
     let ingredients = req.body.ingredient;
 
     User.findById(req.user._id, function(err, user) {
+        if (err) {
+            req.flash('error', err.message);
+            return res.redirect('back');
+        }
         // add recipe to menu
         Recipe.findById({ "_id": req.params.recipe }, function(err, recipe) {
             if (err) {
-                console.log(err);
+                return;
             }
-            else {
-                user.menu.push(recipe);
-                user.save();
-            }
-        })
-    })
+            user.menu.push(recipe);
+            user.save();
+        });
+    });
 
     // delete extraneous 'on's
     for (let i = 0; i < ingredients.num.length; i++) {
@@ -270,7 +265,7 @@ router.post('/recipes/:recipe/add', function(req, res) {
                 User.findById({ "_id": req.user._id }, function(err, user) {
                     if (err) {
                         req.flash('error', err.message);
-                        res.redirect('back');
+                        return res.redirect('back');
                     }
                     user.groceryList.push(ing.createIng(ingredients, i));
                     user.save();

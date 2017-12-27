@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
@@ -6,13 +6,12 @@ var express = require('express'),
     LocalStrategy = require('passport-local').Strategy,
     methodOverride = require('method-override'),
     flash = require('connect-flash'),
-    cookieParser = require("cookie-parser"),
     expressSanitizer = require('express-sanitizer');
     
-var Recipe = require('./models/recipe'),
+const Recipe = require('./models/recipe'),
     User = require('./models/user');
 
-var userRoutes = require('./routes/users'),
+const userRoutes = require('./routes/users'),
     recipeRoutes = require('./routes/recipes'),
     indexRoutes = require('./routes/index');
     
@@ -29,7 +28,6 @@ app.use(expressSanitizer()); // this line follows bodyParser() instantiations
 app.use(express.static(__dirname +'/public'));
 app.use(methodOverride('_method'));
 app.use(flash());
-app.use(cookieParser('secret'));
 
 
 // PASSPORT CONFIGURATION

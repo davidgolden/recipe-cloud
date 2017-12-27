@@ -1,18 +1,23 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var User = require('../models/user');
-const nodemailer = require('nodemailer');
-var URLSafeBase64 = require('urlsafe-base64');
+const express = require('express'),
+    router = express.Router(),
+    passport = require('passport'),
+    User = require('../models/user'),
+    nodemailer = require('nodemailer'),
+    URLSafeBase64 = require('urlsafe-base64');
 
 router.get('/', function(req, res) {
     res.render('landing');
-})
+});
 
 // CREATE USER
 router.post('/users', function(req, res, next) {
     
     User.findOne({ "$or":[{ username: req.body.username }, { email: req.body.email }] }, function(err, user) {
+        if (err) {
+            req.flash('error', err.message);
+            return res.redirect('back');
+        }
+        
         if(user) {
             req.flash('error', 'A user already exists with that username or email!');
             return res.redirect('back');
@@ -26,11 +31,8 @@ router.post('/users', function(req, res, next) {
           req.flash('success', `Wecome to Recipe Cloud, ${newUser.username}`);
           return res.redirect('/');
         });
-    })
-        
-
-    
-})
+    });
+});
 
 // handle login logic
 router.post('/login', emailToLowerCase, function(req, res, next) {
@@ -57,7 +59,7 @@ router.get('/logout', function(req, res) {
   req.logout();
   req.flash('success', 'You have successfully logged out.');
   res.redirect('/');
-})
+});
 
 // password reset
 router.get('/forgot', function(req, res) {
@@ -65,7 +67,7 @@ router.get('/forgot', function(req, res) {
         return res.redirect('/');
     }
     res.render('users/forgot');
-})
+});
 
 router.post('/forgot', function(req, res) {
     if(req.isAuthenticated()) {
@@ -73,15 +75,13 @@ router.post('/forgot', function(req, res) {
     }
 
     (function generateToken() {
-        console.log('called');
-          var buf = Buffer.alloc(16);
-          for (var i = 0; i < buf.length; i++) {
+          let buf = Buffer.alloc(16);
+          for (let i = 0; i < buf.length; i++) {
               buf[i] = Math.floor(Math.random() * 256);
           }
-          var token = URLSafeBase64.encode(buf).toString();
+          let token = URLSafeBase64.encode(buf).toString();
           
         (function assignToken(err) {
-            console.log('assigning');
             if(err) {
                 req.flash('error', err.message);
                 return res.redirrect('/');
@@ -90,7 +90,7 @@ router.post('/forgot', function(req, res) {
             User.findOne({email: req.body.email}, function(err, user) {
                 if(err) {
                     req.flash('error', err.message);
-                    return res.redirect('/')
+                    return res.redirect('/');
                 }
                 
                 user.resetToken = token;
@@ -98,7 +98,7 @@ router.post('/forgot', function(req, res) {
                 
                 user.save();
                 
-                var transporter = nodemailer.createTransport({
+                let transporter = nodemailer.createTransport({
                     host: 'sub5.mail.dreamhost.com',
                     port: 587,
                     secure: false, // true for 465, false for other ports
@@ -112,7 +112,7 @@ router.post('/forgot', function(req, res) {
                     }
                 });
             
-                var mailOptions = {
+                let mailOptions = {
                     from: 'Recipe Cloud <donotreply@recipe-cloud.com>', // sender address
                     to: req.body.email, // list of receivers
                     subject: 'Password Reset', // Subject line
@@ -123,7 +123,6 @@ router.post('/forgot', function(req, res) {
                 };
             
                 transporter.sendMail(mailOptions, (error, info) => {
-                    console.log('called');
                     if (error) {
                         req.flash('error', err.message);
                         return res.redirect('/');
@@ -147,19 +146,19 @@ router.get('/reset/:token', function(req, res) {
             return res.redirect('/forgot');
         }
         res.render('users/reset');
-    })
-})
+    });
+});
 
 router.post('/reset/:token', function(req, res) {
     if(req.body.password != req.body.confirm) {
-        req.flash('error', 'Passwords do not match.')
+        req.flash('error', 'Passwords do not match.');
         return res.redirect('back');
     }
     User.findOne({resetToken: req.params.token, tokenExpires: { $gt: Date.now() } }, function(err, user) {
         if(err || !user) {
             req.flash('err', err.message);
-            res.redirect('/users/forgot');
-        } else {
+            return res.redirect('/users/forgot');
+        }
             user.password = req.body.password;
             user.resetToken = undefined;
             user.tokenExpires = undefined;
@@ -167,10 +166,7 @@ router.post('/reset/:token', function(req, res) {
             
             req.flash('success', 'You have successfully updated your password!');
             res.redirect('/');
-        }
-        
-        
     });
-})
+});
 
 module.exports = router;
