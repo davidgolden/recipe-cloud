@@ -219,34 +219,34 @@ router.post('/users/:user_id', middleware.isLoggedIn, function(req, res) {
         }
         
         // if username is changed, make sure it doesn't already exist
-        if(req.body.username !== user.username) {
-            User.findOne({ username: req.body.username }, function(err, user) {
-                if (err) {
-                    req.flash('error', err.message);
-                    return res.redirect('back');
-                }
+        // if(req.body.username !== user.username) {
+        //     User.findOne({ username: req.body.username }, function(err, user) {
+        //         if (err) {
+        //             req.flash('error', err.message);
+        //             return res.redirect('back');
+        //         }
                 
-                if(user) {
-                    req.flash('error', 'A user already exists with that username or email!');
-                    return res.redirect('back');
-                }
-            });
-        }
+        //         if(user) {
+        //             req.flash('error', 'A user already exists with that username or email!');
+        //             return res.redirect('back');
+        //         }
+        //     });
+        // }
         
         // if email is changed, make sure it doesn't already exist
-        else if(req.body.email !== user.email) {
-            User.findOne({ email: req.body.email }, function(err, user) {
-                if (err) {
-                    req.flash('error', err.message);
-                    return res.redirect('back');
-                }
+        // else if(req.body.email !== user.email) {
+        //     User.findOne({ email: req.body.email }, function(err, user) {
+        //         if (err) {
+        //             req.flash('error', err.message);
+        //             return res.redirect('back');
+        //         }
                 
-                if(user) {
-                    req.flash('error', 'A user already exists with that username or email!');
-                    return res.redirect('back');
-                }
-            });
-        }
+        //         if(user) {
+        //             req.flash('error', 'A user already exists with that username or email!');
+        //             return res.redirect('back');
+        //         }
+        //     });
+        // }
         
         // update user information
         user.username = req.body.username;
