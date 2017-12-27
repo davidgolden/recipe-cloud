@@ -217,56 +217,48 @@ router.post('/users/:user_id', middleware.isLoggedIn, function(req, res) {
             req.flash('error', err.message);
             return res.redirect('back');
         }
-        
         // if username is changed, make sure it doesn't already exist
-        // if(req.body.username !== user.username) {
-        //     User.findOne({ username: req.body.username }, function(err, user) {
-        //         if (err) {
-        //             req.flash('error', err.message);
-        //             return res.redirect('back');
-        //         }
-                
-        //         if(user) {
-        //             req.flash('error', 'A user already exists with that username or email!');
-        //             return res.redirect('back');
-        //         }
-        //     });
-        // }
+        else if(req.body.username !== user.username) {
+            User.findOne({ username: req.body.username }, function(err, user) {
+                if (err || user) {
+                    req.flash('error', 'A user with that username or email already exists!');
+                    return res.redirect('back');
+                }
+            });
+        }
         
         // if email is changed, make sure it doesn't already exist
-        // else if(req.body.email !== user.email) {
-        //     User.findOne({ email: req.body.email }, function(err, user) {
-        //         if (err) {
-        //             req.flash('error', err.message);
-        //             return res.redirect('back');
-        //         }
-                
-        //         if(user) {
-        //             req.flash('error', 'A user already exists with that username or email!');
-        //             return res.redirect('back');
-        //         }
-        //     });
-        // }
-        
-        // update user information
-        user.username = req.body.username;
-        user.email = req.body.email;
-        user.password = req.body.password;
-        user.save();
-
-        // now update all recipe's authors with username
-        Recipe.find({ "author.id": user._id }, function(err, foundRecipes) {
-            if (err) {
-                req.flash('error', err.message);
-                return res.redirect('back');
-            }
-            foundRecipes.forEach(recipe => {
-                recipe.author.username = req.body.username;
-                recipe.save();
+        else if(req.body.email !== user.email) {
+            User.findOne({ email: req.body.email }, function(err, user) {
+                if (err || user) {
+                    req.flash('error', 'A user with that username or email already exists!');
+                    return res.redirect('back');
+                }
             });
-        });
-        req.flash('success', 'Successfully updated your portfolio!');
-        res.redirect('back');
+        }
+        
+        else {
+            // update user information
+            user.username = req.body.username;
+            user.email = req.body.email;
+            user.password = req.body.password;
+            user.save();
+    
+            // now update all recipe's authors with username
+            Recipe.find({ "author.id": user._id }, function(err, foundRecipes) {
+                if (err) {
+                    req.flash('error', err.message);
+                    return res.redirect('back');
+                }
+                foundRecipes.forEach(recipe => {
+                    recipe.author.username = req.body.username;
+                    recipe.save();
+                });
+            });
+            req.flash('success', 'Successfully updated your portfolio!');
+            res.redirect('back');
+        }
+        
     });
 });
 
